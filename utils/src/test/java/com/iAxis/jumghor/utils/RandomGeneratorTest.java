@@ -1,10 +1,14 @@
 package com.iAxis.jumghor.utils;
 
-import com.iAxis.jumghor.utils.common.ServerInitials;
 import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author aditya.chakma
@@ -13,37 +17,66 @@ import java.util.*;
 
 public class RandomGeneratorTest {
 
+    private static class UIDWrapper implements Runnable {
+        Set<Long> uids;
+        int iterations = 1_000;
+
+        public UIDWrapper(int iterations) {
+            uids = new HashSet<>();
+            this.iterations = iterations;
+        }
+
+        @Override
+        public void run() {
+            for (int i = 0; i < iterations; i++) {
+                uids.add(RandomGenerator.init().randomUUID(101));
+            }
+        }
+
+        public Set<Long> getUids() {
+            return uids;
+        }
+
+        public int getIterations() {
+            return iterations;
+        }
+    }
+
     @Test
     public void testRandom() {
         Set<String> set = new HashSet<>();
 
         for (int i = 0; i < 100_000; i++) {
-            set.add(RandomGenerator.random(RandomGenerator.GeneratorLen.L16));
+            set.add(RandomGenerator.init().randomSecureString(RandomGenerator.GeneratorLen.L16));
         }
 
         assert set.size() == 100_000;
     }
 
     @Test
-    public void testRandomUUID() {
-        List<Map.Entry<Integer, Long>> idxUidList = new ArrayList<>();
+    public void testRandomUUID() throws InterruptedException {
+        int iterations = 100;
+        int concurrent = 5;
 
-        for (int i = 0; i < 10_000; i++) {
-            idxUidList.add(new AbstractMap.SimpleEntry<>(i, RandomGenerator.randomUUID(ServerInitials.DEFAULT, 101)));
+        List<UIDWrapper> wrappers = new ArrayList<>(concurrent);
+
+        for (int i = 0; i < concurrent; i++) {
+            wrappers.add(new UIDWrapper(iterations));
         }
 
-        idxUidList.sort((a, b) -> {
-            if ()
-        });
+        List<Thread> threads = wrappers.stream().map(Thread::new).toList();
 
-        int wrongSequence = 0;
-        for (int i = 0; i < idxUidList.size(); i++) {
-            if (idxUidList.get(i).getKey() > i) {
-//                System.out.println(i + ":" +idxUidList.get(i));
-                wrongSequence += 1;
-            }
+        threads.forEach(Thread::start);
+
+        for (Thread thread : threads) {
+            thread.join();
         }
 
-        System.out.println("Wrong sequence: " + wrongSequence);
+        Set<Long> uids = new HashSet<>();
+        for (UIDWrapper wrapper : wrappers) {
+            uids.addAll(wrapper.getUids());
+        }
+
+        assertEquals(concurrent * iterations, uids.size(), "Duplicate UIDs generated");
     }
 }

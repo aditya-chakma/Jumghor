@@ -1,21 +1,30 @@
 package com.iAxis.jumghor.utils.security;
 
-import com.iAxis.jumghor.utils.common.ServerInitials;
-
-import java.nio.ByteBuffer;
 import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author aditya.chakma
  * @since 24 Apr, 2025 3:16 PM
  */
+/**
+ * This is an implementation of Twitters Snowflake algorithm,
+ * a UUID generator in distributed system
+ * */
 public final class RandomGenerator {
 
-    private static int sequence = 0;
+    private static final AtomicLong sequence = new AtomicLong(0);
+    private static final AtomicLong lastMillis = new AtomicLong(0);
 
     private static final SecureRandom secureRandom;
+
+    private static final long MILLIS_EPOCH = 1745660566448L;
+    private static final long MAX_TIMESTAMP = (1L << 41) - 1;
+    private static final int TIMESTAMP_BITS = 41;
+    private static final int SERVER_ID_BITS = 12;
+    private static final int SEQUENCE_BITS = 10;
+    private static final int SERVER_ID_MASK = (1 << SERVER_ID_BITS) - 1;
+    private static final int SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
 
     private static RandomGenerator instance;
 
@@ -51,23 +60,43 @@ public final class RandomGenerator {
     private RandomGenerator() {
     }
 
-    /**
-     * returns a 36 character long uid
-     */
-    public static long randomUUID(ServerInitials serverInitials, int serverId) {
-        long uuid = 0L;
+    public static RandomGenerator init() {
+        if (instance == null) {
+            instance = new RandomGenerator();
+        }
 
-        uuid |= (getMillis() << 22);
-        uuid |= (getServerBits(serverId) << 12);
-        uuid |= (sequence++ & 4095);
-
-        return uuid;
+        return instance;
     }
 
     /**
-     * Generates a random String
+     * returns a 64 bit UUID
      */
-    public static String random(GeneratorLen generatorLen) {
+    public synchronized long randomUUID(int serverId) {
+        long millis = getMillis();
+        long serverBits = getServerBits(serverId);
+
+        if (millis == lastMillis.get()) {
+            long seq = sequence.incrementAndGet() & 4095;
+
+            if (seq == 0) {
+                millis = waitForNextMillis(millis);
+            }
+
+        } else {
+            sequence.set(0);
+        }
+
+        lastMillis.set(millis);
+
+        return (millis << (SERVER_ID_BITS + SEQUENCE_BITS))
+                | (serverBits << SEQUENCE_BITS)
+                | (sequence.get() & SEQUENCE_MASK);
+    }
+
+    /**
+     * Generates a cryptographically secure random String
+     */
+    public String randomSecureString(GeneratorLen generatorLen) {
         int len = generatorLen.getLen();
 
         StringBuilder sb = new StringBuilder();
@@ -80,81 +109,20 @@ public final class RandomGenerator {
     }
 
 
-    public static String get(ServerInitials serverInitials, GeneratorLen uuidLen, long nodeNumber) {
-        String server = serverInitials.getServerName();
-        int len = uuidLen.getLen();
-
-//        byte[] bytes = new byte[len]; // each character is 4 bytes long
-//        int offset = 0;
-//        System.out.printf("Dash bytes: (%d) %s\n", dash.length , Base64.getEncoder().encodeToString(dash));
-//
-//        // server identifier
-//        byte[] serverBytes = getBytes(server, 2);
-//        offset = putBytes(bytes, offset, serverBytes);
-//        offset = putBytes(bytes, offset, dash);
-//
-//        System.out.printf("Server bytes: (%d) %s \n", serverBytes.length,  Base64.getEncoder().encodeToString(serverBytes));
-//
-//        // node identifier
-//        byte[] nodeBytes = getBytes(nodeNumber, 2);
-//        offset = putBytes(bytes, offset, nodeBytes);
-//        offset = putBytes(bytes, offset, dash);
-//
-//        System.out.printf("Node bytes: (%d), %s\n", nodeBytes.length, Base64.getEncoder().encodeToString(nodeBytes));
-//
-//        // random bytes
-//        byte[] randomBytes = getRandomBytes(4);
-//        offset = putBytes(bytes, offset, randomBytes);
-//
-//       // System.out.println("Random bytes: " + Arrays.toString(randomBytes));
-//
-//        // put sequence
-//        byte[] sequenceBytes = getBytes(System.nanoTime(), 6);
-//        offset = putBytes(bytes, offset, sequenceBytes);
-//
-//        System.out.println("Offset: " + offset);
-//        System.out.printf("Sequence bytes: (%d) %s\n", sequenceBytes.length, Base64.getEncoder().encodeToString(sequenceBytes));
-//        System.out.printf("bytes length: %d\n", bytes.length);
-
-        int offset = 0;
-
-        // first
-
-        return null;
+    public long getMillis() {
+        long millis = System.currentTimeMillis() - MILLIS_EPOCH;
+        return millis & MAX_TIMESTAMP;
     }
 
-    private static byte[] getBytes(String s, int len) {
-        byte[] bytes = s.getBytes();
-        return Arrays.copyOfRange(bytes, bytes.length - len, bytes.length);
+    private long getServerBits(long serverId) {
+        return serverId & SERVER_ID_MASK;
     }
 
-    private static byte[] getBytes(Long num, int len) {
-        ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-        buffer.putLong(num);
-        byte[] bytes = buffer.array();
-        return Arrays.copyOfRange(bytes, bytes.length - len, bytes.length);
-    }
-
-    private static int putBytes(byte[] bytes, int offset, byte[] source) {
-        System.out.println("Offset: " + offset);
-        System.arraycopy(source, 0, bytes, offset, source.length);
-        return source.length + offset;
-    }
-
-    private static byte[] getRandomBytes(int len) {
-        byte[] bytes = new byte[len];
-        secureRandom.nextBytes(bytes);
-
-        return bytes;
-    }
-
-    public static long getMillis() {
-        long millis = System.currentTimeMillis();// - 1745660566448L;
-        return millis & 2199023255551L;
-    }
-
-    private static long getServerBits(long serverId) {
-        return serverId & 1023;
+    private long waitForNextMillis(long currentMillis) {
+        while (currentMillis == lastMillis.get()) {
+            lastMillis.set(getMillis());
+        }
+        return lastMillis.get();
     }
 
 }
