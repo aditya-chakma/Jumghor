@@ -24,6 +24,8 @@ public class User extends Persistent {
     public static final int EMAIL_ADDRESS_MAX_SIZE = 254;
     public static final int PASSWORD_HASH_MAX_SIZE = 256;
 
+    public static final String CACHE_NAME = "user";
+
     @NotBlank
     @Size(max = USERNAME_MAX_SIZE)
     @Column(name = "user_name", unique = true, nullable = false, updatable = false)

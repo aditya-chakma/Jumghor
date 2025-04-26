@@ -3,6 +3,7 @@ package com.iAxis.jumghor.entities.entity.interfaces;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -29,6 +30,9 @@ public abstract class Persistent {
     @Column(name = "updated", nullable = false)
     private LocalDate updated;
 
+    @Version
+    private long version;
+
     public long getId() {
         return id;
     }
@@ -51,5 +55,13 @@ public abstract class Persistent {
 
     public void setUpdated(LocalDate updated) {
         this.updated = updated;
+    }
+
+    public long getVersion() {
+        return version;
+    }
+
+    public void setVersion(long version) {
+        this.version = version;
     }
 }

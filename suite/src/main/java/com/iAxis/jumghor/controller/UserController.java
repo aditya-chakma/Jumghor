@@ -1,35 +1,64 @@
 package com.iAxis.jumghor.controller;
 
 import com.iAxis.jumghor.entities.dto.UserDto;
-import com.iAxis.jumghor.repository.UserRepository;
+import com.iAxis.jumghor.entities.entity.User;
+import com.iAxis.jumghor.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author aditya.chakma
  * @since 22 Apr, 2025 3:16 PM
  */
 @RestController
-@RequestMapping("/u")
+@RequestMapping("/v1/u")
 public class UserController {
 
-    private UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController() {
-    }
-
-    @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(@Autowired UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/all")
     public List<UserDto> getAll() {
-        return userRepository.findAll().stream().map(UserDto::new).toList();
+        return userService.findAll().stream().map(UserDto::new).toList();
+    }
+
+    @GetMapping("/profile/{user_id}")
+    public UserDto getUser(@PathVariable("user_id") long id) {
+        User user = userService.findById(id);
+
+        if (Objects.isNull(user)) {
+            return null;
+        }
+
+        return new UserDto(user);
+    }
+
+    @PostMapping("/profile")
+    public UserDto createUser(@RequestBody UserDto userDto) {
+        User user = userDto.toUser();
+        userService.saveOrUpdate(user);
+        return new UserDto(user);
+    }
+
+    @PatchMapping("/profile")
+    public UserDto updateUser(@RequestBody UserDto userDto) {
+        User user = userDto.toUser();
+        User oldUser = userService.findByUserName(user.getUserName());
+
+        oldUser.setUserName(user.getUserName());
+        oldUser.setEmail(user.getEmail());
+        oldUser.setPassword(user.getPassword());
+        oldUser.setDisplayName(user.getDisplayName());
+
+        userService.saveOrUpdate(oldUser);
+
+        return new UserDto(user);
     }
 
 }

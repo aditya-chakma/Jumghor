@@ -8,6 +8,7 @@ CREATE TABLE app_user
     salt          VARCHAR(32)  NOT NULL,
     created       TIMESTAMP(6) NOT NULL,
     updated       TIMESTAMP(6),
+    version       BIGINT       NOT NULL,
     CONSTRAINT pk_app_user_id PRIMARY KEY (id)
 );
 
@@ -19,6 +20,7 @@ CREATE TABLE post
     user_id BIGINT       NOT NULL,
     created TIMESTAMP(6) NOT NULL,
     updated TIMESTAMP(6),
+    version BIGINT       NOT NULL,
     CONSTRAINT pk_post_id PRIMARY KEY (id),
     CONSTRAINT fk_post_app_user_id FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
@@ -32,6 +34,7 @@ CREATE TABLE comments
     post_id BIGINT       NOT NULL,
     created TIMESTAMP(6) NOT NULL,
     updated TIMESTAMP(6),
+    version BIGINT       NOT NULL,
     CONSTRAINT pk_comments_id PRIMARY KEY (id),
     CONSTRAINT fk_comments_app_user_id FOREIGN KEY (user_id) REFERENCES app_user (id),
     CONSTRAINT fk_comments_post_id FOREIGN KEY (post_id) REFERENCES post (id)

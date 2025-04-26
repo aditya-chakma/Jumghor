@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/p")
 public class PostController {
 
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public PostController(@Autowired PostRepository postRepository, @Autowired UserRepository userRepository) {
         this.postRepository = postRepository;

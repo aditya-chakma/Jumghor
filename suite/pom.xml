@@ -50,6 +50,7 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -61,13 +62,19 @@
 			<scope>test</scope>
 		</dependency>
 
-	<!--	Local builds	-->
+		<!--	todo: Replace with Redis	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<!--	Local builds	-->
 		<dependency>
 			<groupId>com.iAxis.jumghor</groupId>
 			<artifactId>entities</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
-	<!--	Local builds	-->
+		<!--	Local builds	-->
 	</dependencies>
 
 	<build>
