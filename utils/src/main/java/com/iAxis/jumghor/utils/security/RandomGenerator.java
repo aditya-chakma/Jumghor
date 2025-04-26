@@ -13,6 +13,8 @@ import java.util.UUID;
  */
 public final class RandomGenerator {
 
+    private static int sequence = 0;
+
     private static final SecureRandom secureRandom;
 
     private static RandomGenerator instance;
@@ -52,12 +54,14 @@ public final class RandomGenerator {
     /**
      * returns a 36 character long uid
      */
-    public static String randomUUID(ServerInitials serverInitials, int serverId) {
-        // todo: implementation
-        long millis = System.currentTimeMillis();
+    public static long randomUUID(ServerInitials serverInitials, int serverId) {
+        long uuid = 0L;
 
+        uuid |= (getMillis() << 22);
+        uuid |= (getServerBits(serverId) << 12);
+        uuid |= (sequence++ & 4095);
 
-        return null;
+        return uuid;
     }
 
     /**
@@ -142,6 +146,15 @@ public final class RandomGenerator {
         secureRandom.nextBytes(bytes);
 
         return bytes;
+    }
+
+    public static long getMillis() {
+        long millis = System.currentTimeMillis();// - 1745660566448L;
+        return millis & 2199023255551L;
+    }
+
+    private static long getServerBits(long serverId) {
+        return serverId & 1023;
     }
 
 }
