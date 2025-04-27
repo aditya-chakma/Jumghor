@@ -1,28 +1,28 @@
 package com.iAxis.jumghor.utils.security;
 
 import java.security.SecureRandom;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author aditya.chakma
  * @since 24 Apr, 2025 3:16 PM
  */
+
 /**
  * This is an implementation of Twitters Snowflake algorithm,
  * a UUID generator in distributed system
- * */
+ */
 public final class RandomGenerator {
 
-    private static final AtomicLong sequence = new AtomicLong(0);
-    private static final AtomicLong lastMillis = new AtomicLong(0);
+    private static volatile long sequence = 0L;
+    private static volatile long lastMillis = -1L;
 
     private static final SecureRandom secureRandom;
 
     private static final long MILLIS_EPOCH = 1745660566448L;
     private static final long MAX_TIMESTAMP = (1L << 41) - 1;
     private static final int TIMESTAMP_BITS = 41;
-    private static final int SERVER_ID_BITS = 12;
-    private static final int SEQUENCE_BITS = 10;
+    private static final int SERVER_ID_BITS = 10;
+    private static final int SEQUENCE_BITS = 12;
     private static final int SERVER_ID_MASK = (1 << SERVER_ID_BITS) - 1;
     private static final int SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
 
@@ -52,7 +52,7 @@ public final class RandomGenerator {
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-            "@", "-", "+", "=", "+"
+            "@", "-", "+", "=", "_"
     };
 
     private static final byte[] dash = "-".getBytes();
@@ -71,26 +71,33 @@ public final class RandomGenerator {
     /**
      * returns a 64 bit UUID
      */
-    public synchronized long randomUUID(int serverId) {
-        long millis = getMillis();
+    public long randomUUID(int serverId) {
         long serverBits = getServerBits(serverId);
 
-        if (millis == lastMillis.get()) {
-            long seq = sequence.incrementAndGet() & 4095;
+        long millis;
+        long nextSeq;
 
-            if (seq == 0) {
-                millis = waitForNextMillis(millis);
+        synchronized (this) {
+            millis = getMillis();
+
+            if (millis == lastMillis) {
+                sequence = (sequence + 1) & SEQUENCE_MASK;
+
+                if (sequence == 0) {
+                    millis = waitForNextMillis(millis);
+                }
+
+            } else {
+                sequence = 0;
             }
 
-        } else {
-            sequence.set(0);
+            lastMillis = millis;
+            nextSeq = sequence;
         }
-
-        lastMillis.set(millis);
 
         return (millis << (SERVER_ID_BITS + SEQUENCE_BITS))
                 | (serverBits << SEQUENCE_BITS)
-                | (sequence.get() & SEQUENCE_MASK);
+                | (nextSeq & SEQUENCE_MASK);
     }
 
     /**
@@ -119,10 +126,10 @@ public final class RandomGenerator {
     }
 
     private long waitForNextMillis(long currentMillis) {
-        while (currentMillis == lastMillis.get()) {
-            lastMillis.set(getMillis());
+        while (currentMillis == lastMillis) {
+            lastMillis = getMillis();
         }
-        return lastMillis.get();
+        return lastMillis;
     }
 
 }

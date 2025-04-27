@@ -55,8 +55,8 @@ public class RandomGeneratorTest {
 
     @Test
     public void testRandomUUID() throws InterruptedException {
-        int iterations = 100;
-        int concurrent = 5;
+        int iterations = 1_000;
+        int concurrent = 10;
 
         List<UIDWrapper> wrappers = new ArrayList<>(concurrent);
 
