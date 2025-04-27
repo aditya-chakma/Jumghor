@@ -30,6 +30,9 @@ public abstract class Persistent {
     @Column(name = "updated", nullable = false)
     private LocalDate updated;
 
+    @Column(name = "status")
+    private int status;
+
     @Version
     private long version;
 
@@ -55,6 +58,14 @@ public abstract class Persistent {
 
     public void setUpdated(LocalDate updated) {
         this.updated = updated;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public long getVersion() {

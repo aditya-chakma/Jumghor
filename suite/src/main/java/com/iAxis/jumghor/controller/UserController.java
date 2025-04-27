@@ -61,4 +61,12 @@ public class UserController {
         return new UserDto(user);
     }
 
+//    @PatchMapping("/friend/{user_id}/{friend_id}")
+//    public UserDto addUser(@PathVariable("user_id") long userId, @PathVariable("friend_id") long friendId) {
+//        User user = userService.findById(userId);
+//        User friend = userService.findById(friendId);
+//
+//
+//    }
+
 }
