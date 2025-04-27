@@ -94,8 +94,6 @@ public class UserDto implements Serializable {
         user.setCreated(LocalDate.now());
         user.setUpdated(LocalDate.now());
 
-        user.setSalt("salt");
-
         return user;
     }
 

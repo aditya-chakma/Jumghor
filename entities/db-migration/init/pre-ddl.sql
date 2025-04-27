@@ -5,7 +5,6 @@ CREATE TABLE app_user
     display_name  VARCHAR(64)  NOT NULL,
     email         VARCHAR(260) NOT NULL,
     password_hash VARCHAR(256) NOT NULL,
-    salt          VARCHAR(32)  NOT NULL,
     created       TIMESTAMP(6) NOT NULL,
     updated       TIMESTAMP(6),
     version       BIGINT       NOT NULL,

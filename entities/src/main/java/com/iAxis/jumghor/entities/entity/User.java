@@ -47,10 +47,6 @@ public class User extends Persistent {
     @Column(name = "password_hash", nullable = false)
     private String password;
 
-    @NotBlank
-    @Column(name = "salt", nullable = false)
-    private String salt;
-
     public String getUserName() {
         return userName;
     }
@@ -83,23 +79,16 @@ public class User extends Persistent {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId());
+        User that = (User) o;
+        return Objects.equals(this.getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+
 }
