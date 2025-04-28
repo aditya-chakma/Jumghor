@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @author aditya.chakma
@@ -19,12 +20,12 @@ public abstract class Persistent<T> {
     @NotNull
     @CreatedDate
     @Column(name = "created", nullable = false)
-    private LocalDate created;
+    private LocalDateTime created;
 
     @NotNull
     @LastModifiedDate
     @Column(name = "updated", nullable = false)
-    private LocalDate updated;
+    private LocalDateTime updated;
 
     @Column(name = "status")
     private int status;
@@ -36,19 +37,19 @@ public abstract class Persistent<T> {
 
     public abstract void setId(T id);
 
-    public LocalDate getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDate created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public LocalDate getUpdated() {
+    public LocalDateTime getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDate updated) {
+    public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
     }
 

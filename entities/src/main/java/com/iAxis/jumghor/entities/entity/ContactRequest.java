@@ -25,6 +25,14 @@ public class ContactRequest extends Persistent<Long> {
     @JoinColumn(name = "to_id", nullable = false, updatable = false)
     private User toUser;
 
+    public ContactRequest() {
+    }
+
+    public ContactRequest(User fromUser, User toUser) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+    }
+
     @Override
     public Long getId() {
         return id;

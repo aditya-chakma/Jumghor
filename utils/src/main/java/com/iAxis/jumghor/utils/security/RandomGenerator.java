@@ -68,6 +68,10 @@ public final class RandomGenerator {
         return instance;
     }
 
+    public long randomUUID() {
+        return randomUUID(101);
+    }
+
     /**
      * returns a 64 bit UUID
      */

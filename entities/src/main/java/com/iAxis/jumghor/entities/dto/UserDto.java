@@ -91,8 +91,8 @@ public class UserDto implements Serializable {
         user.setDisplayName(displayName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setCreated(LocalDate.now());
-        user.setUpdated(LocalDate.now());
+        user.setCreated(LocalDateTime.now());
+        user.setUpdated(LocalDateTime.now());
 
         return user;
     }
