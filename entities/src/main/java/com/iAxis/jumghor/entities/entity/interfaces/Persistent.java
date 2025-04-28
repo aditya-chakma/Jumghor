@@ -1,7 +1,6 @@
 package com.iAxis.jumghor.entities.entity.interfaces;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
@@ -9,8 +8,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
-
-import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
 
 /**
  * @author aditya.chakma
@@ -70,7 +67,5 @@ public abstract class Persistent<T> {
     public void setVersion(long version) {
         this.version = version;
     }
-
-    public abstract boolean isNew();
 
 }

@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+import java.util.Objects;
+
+import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
 
 /**
  * @author aditya.chakma
@@ -79,4 +82,21 @@ public class Post extends Persistent<Long> {
     public void setCommentsList(List<Comment> commentsList) {
         this.commentsList = commentsList;
     }
+
+    public boolean isNew() {
+        return isValidIdentifier(getId());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Post that = (Post) o;
+        return Objects.equals(this.id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
 }

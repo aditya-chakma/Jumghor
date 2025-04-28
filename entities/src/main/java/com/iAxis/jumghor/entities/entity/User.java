@@ -12,6 +12,8 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
+import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
+
 /**
  * @author aditya.chakma
  * @since 22 Apr, 2025 2:23 PM
@@ -93,6 +95,10 @@ public class User extends Persistent<Long> {
         this.password = password;
     }
 
+    public boolean isNew() {
+        return !isValidIdentifier(getId());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -105,8 +111,4 @@ public class User extends Persistent<Long> {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public boolean isNew() {
-        return false;
-    }
 }

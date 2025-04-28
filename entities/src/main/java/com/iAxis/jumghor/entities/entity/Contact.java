@@ -30,7 +30,15 @@ public class Contact extends Persistent<ContactId> {
     }
 
     @Override
-    public boolean isNew() {
-        return Objects.isNull(id);
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact that = (Contact) o;
+        return Objects.equals(this.id, that.id);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
+
 }
