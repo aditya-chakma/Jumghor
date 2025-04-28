@@ -78,4 +78,5 @@ public class Comment extends Persistent<Long> {
     public void setPost(Post post) {
         this.post = post;
     }
+
 }
