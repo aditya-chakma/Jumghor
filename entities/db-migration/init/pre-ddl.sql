@@ -76,18 +76,18 @@ CREATE TABLE contact
 CREATE INDEX idx_contacts_user1 ON contact (user1);
 CREATE INDEX idx_contacts_user2 ON contact (user2);
 
-CREATE TABLE follower
-(
-    followee_id BIGINT       NOT NULL,
-    follower_id BIGINT       NOT NULL,
-    created     TIMESTAMP(6) NOT NULL,
-    updated     TIMESTAMP(6),
-    status      SMALLINT     NOT NULL,
-    version     INT          NOT NULL,
-    CONSTRAINT pk_follower_id PRIMARY KEY (followee_id, follower_id),
-    CONSTRAINT fk_follower_followee_id FOREIGN KEY (followee_id) REFERENCES app_user (id),
-    CONSTRAINT fk_follower_follower_id FOREIGN KEY (follower_id) REFERENCES app_user (id)
-);
-
-CREATE INDEX idx_follower_followee_id ON follower (followee_id);
-CREATE INDEX idx_follower_follower_id ON follower (follower_id);
+-- CREATE TABLE follower
+-- (
+--     followee_id BIGINT       NOT NULL,
+--     follower_id BIGINT       NOT NULL,
+--     created     TIMESTAMP(6) NOT NULL,
+--     updated     TIMESTAMP(6),
+--     status      SMALLINT     NOT NULL,
+--     version     INT          NOT NULL,
+--     CONSTRAINT pk_follower_id PRIMARY KEY (followee_id, follower_id),
+--     CONSTRAINT fk_follower_followee_id FOREIGN KEY (followee_id) REFERENCES app_user (id),
+--     CONSTRAINT fk_follower_follower_id FOREIGN KEY (follower_id) REFERENCES app_user (id)
+-- );
+--
+-- CREATE INDEX idx_follower_followee_id ON follower (followee_id);
+-- CREATE INDEX idx_follower_follower_id ON follower (follower_id);

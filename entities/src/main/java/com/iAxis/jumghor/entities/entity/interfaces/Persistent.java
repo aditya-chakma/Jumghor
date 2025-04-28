@@ -10,15 +10,14 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDate;
 
+import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
+
 /**
  * @author aditya.chakma
  * @since 22 Apr, 2025 2:25 PM
  */
 @MappedSuperclass
-public abstract class Persistent {
-
-    @Id
-    private long id;
+public abstract class Persistent<T> {
 
     @NotNull
     @CreatedDate
@@ -36,13 +35,9 @@ public abstract class Persistent {
     @Version
     private long version;
 
-    public long getId() {
-        return id;
-    }
+    public abstract T getId();
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public abstract void setId(T id);
 
     public LocalDate getCreated() {
         return created;
@@ -75,4 +70,7 @@ public abstract class Persistent {
     public void setVersion(long version) {
         this.version = version;
     }
+
+    public abstract boolean isNew();
+
 }

@@ -1,10 +1,7 @@
 package com.iAxis.jumghor.entities.entity;
 
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -13,7 +10,10 @@ import jakarta.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "contact_request")
-public class ContactRequest extends Persistent {
+public class ContactRequest extends Persistent<Long> {
+
+    @Id
+    private Long id;
 
     @NotNull
     @OneToOne
@@ -24,6 +24,16 @@ public class ContactRequest extends Persistent {
     @OneToOne
     @JoinColumn(name = "to_id", nullable = false, updatable = false)
     private User toUser;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User getFromUser() {
         return fromUser;

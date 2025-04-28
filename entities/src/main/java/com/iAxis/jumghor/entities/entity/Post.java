@@ -15,9 +15,12 @@ import java.util.List;
  */
 @Table
 @Entity(name = "post")
-public class Post extends Persistent {
+public class Post extends Persistent<Long> {
 
     public static final int MAX_POST_DETAILS = 30000;
+
+    @Id
+    private Long id;
 
     @NotBlank
     @Size(max = MAX_POST_DETAILS)
@@ -34,6 +37,16 @@ public class Post extends Persistent {
 
     @OneToMany(mappedBy = "post")
     private List<Comment> commentsList;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDetails() {
         return details;
