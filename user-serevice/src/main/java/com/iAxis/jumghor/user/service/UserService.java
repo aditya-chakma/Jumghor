@@ -1,7 +1,7 @@
-package com.iAxis.jumghor.service;
+package com.iAxis.jumghor.user.service;
 
 import com.iAxis.jumghor.entities.entity.User;
-import com.iAxis.jumghor.repository.UserRepository;
+import com.iAxis.jumghor.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

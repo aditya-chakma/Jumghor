@@ -1,4 +1,4 @@
-package com.iAxis.jumghor;
+package com.iAxis.jumghor.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.repository;
+package com.iAxis.jumghor.user.repository;
 
 import com.iAxis.jumghor.entities.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

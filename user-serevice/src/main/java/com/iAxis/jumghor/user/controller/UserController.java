@@ -1,8 +1,8 @@
-package com.iAxis.jumghor.controller;
+package com.iAxis.jumghor.user.controller;
 
 import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.User;
-import com.iAxis.jumghor.service.UserService;
+import com.iAxis.jumghor.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
