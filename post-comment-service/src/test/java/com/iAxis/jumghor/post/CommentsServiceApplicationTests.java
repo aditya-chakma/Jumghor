@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.comment;
+package com.iAxis.jumghor.post;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

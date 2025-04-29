@@ -1,6 +1,6 @@
-package com.iAxis.jumghor.comment.controller;
+package com.iAxis.jumghor.post.controller;
 
-import com.iAxis.jumghor.comment.repository.CommentRepository;
+import com.iAxis.jumghor.post.repository.CommentRepository;
 import com.iAxis.jumghor.entities.dto.CommentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

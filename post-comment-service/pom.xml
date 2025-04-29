@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.iAxis.jumghor</groupId>
-	<artifactId>comments-service</artifactId>
+	<artifactId>post-comment-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>comments-service</name>
 	<description>Comments service for jumghor</description>

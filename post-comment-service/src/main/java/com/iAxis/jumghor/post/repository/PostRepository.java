@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.repository;
+package com.iAxis.jumghor.post.repository;
 
 import com.iAxis.jumghor.entities.entity.Post;
 import com.iAxis.jumghor.entities.entity.User;

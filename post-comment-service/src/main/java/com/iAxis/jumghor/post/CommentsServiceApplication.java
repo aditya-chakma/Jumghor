@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.comment;
+package com.iAxis.jumghor.post;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

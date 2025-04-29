@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.comment.repository;
+package com.iAxis.jumghor.post.repository;
 
 import com.iAxis.jumghor.entities.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
