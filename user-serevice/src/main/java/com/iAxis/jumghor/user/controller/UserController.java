@@ -3,7 +3,9 @@ package com.iAxis.jumghor.user.controller;
 import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.User;
 import com.iAxis.jumghor.user.service.UserService;
+import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,9 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/v1/u")
 public class UserController {
+
+    @Value("${server.id}")
+    private int serverId;
 
     private final UserService userService;
 
@@ -42,6 +47,7 @@ public class UserController {
     @PostMapping("/profile")
     public UserDto createUser(@RequestBody UserDto userDto) {
         User user = userDto.toUser();
+        user.setId(RandomGenerator.init().randomUUID(serverId));
         userService.saveOrUpdate(user);
         return new UserDto(user);
     }

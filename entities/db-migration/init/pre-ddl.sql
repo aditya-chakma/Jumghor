@@ -9,7 +9,8 @@ CREATE TABLE app_user
     updated       TIMESTAMP(6),
     status        SMALLINT     NOT NULL,
     version       INT          NOT NULL,
-    CONSTRAINT pk_app_user_id PRIMARY KEY (id)
+    CONSTRAINT pk_app_user_id PRIMARY KEY (id),
+    CONSTRAINT uk_app_user_user_name UNIQUE (user_name)
 );
 
 CREATE TABLE post
