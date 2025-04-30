@@ -1,5 +1,6 @@
 package com.iAxis.jumghor.entities.entity;
 
+import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,9 +13,13 @@ import jakarta.validation.constraints.Size;
  */
 @Table
 @Entity(name = "comment")
-public class Comment extends Persistent {
+public class Comment extends Persistent<Long> {
 
     public static final int MAX_COMMENT_SIZE = 4000;
+
+    @Id
+    @SnowflakeSequence
+    private Long id;
 
     @NotBlank
     @Size(max = MAX_COMMENT_SIZE)
@@ -33,6 +38,16 @@ public class Comment extends Persistent {
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
     private Post post;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getComment() {
         return comment;
@@ -65,4 +80,5 @@ public class Comment extends Persistent {
     public void setPost(Post post) {
         this.post = post;
     }
+
 }

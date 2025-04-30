@@ -1,15 +1,17 @@
 package com.iAxis.jumghor.entities.entity;
 
 
+import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.iAxis.jumghor.utils.security.SecurityUtils;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
+
+import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
 
 /**
  * @author aditya.chakma
@@ -17,12 +19,18 @@ import java.util.Objects;
  */
 @Table
 @Entity(name = "app_user")
-public class User extends Persistent {
+public class User extends Persistent<Long> {
 
     public static final int USERNAME_MAX_SIZE = 15;
     public static final int DISPLAYNAME_MAX_SIZE = 64;
     public static final int EMAIL_ADDRESS_MAX_SIZE = 254;
     public static final int PASSWORD_HASH_MAX_SIZE = 256;
+
+    public static final String CACHE_NAME = "app_user";
+
+    @Id
+    @SnowflakeSequence
+    private Long id;
 
     @NotBlank
     @Size(max = USERNAME_MAX_SIZE)
@@ -40,14 +48,23 @@ public class User extends Persistent {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotBlank
-    @Size(max = PASSWORD_HASH_MAX_SIZE)
-    @Column(name = "password_hash", nullable = false)
+    @Transient
     private String password;
 
     @NotBlank
-    @Column(name = "salt", nullable = false)
-    private String salt;
+    @Size(max = PASSWORD_HASH_MAX_SIZE)
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;
@@ -81,23 +98,33 @@ public class User extends Persistent {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public boolean isNew() {
+        return !isValidIdentifier(getId());
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId());
+        User that = (User) o;
+        return Objects.equals(this.getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+
+    private String getPasswordHash() {
+        return passwordHash;
+    }
+
+    private void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    @PrePersist
+    private void prePersist() {
+        setPasswordHash(SecurityUtils.encryptPassword(getPassword()));
+    }
+
 }
