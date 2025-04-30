@@ -30,7 +30,7 @@ public class RandomGeneratorTest {
         @Override
         public void run() {
             for (int i = 0; i < iterations; i++) {
-                uids.add(RandomGenerator.init().randomUUID(101));
+                uids.add(RandomGenerator.init().randomUUID());
             }
         }
 
@@ -56,8 +56,8 @@ public class RandomGeneratorTest {
 
     @Test
     public void testRandomUUID() throws InterruptedException {
-        int iterations = 100; // todo: test with higher numbers 5_000
-        int concurrent = 5;
+        int iterations = 5_00;
+        int concurrent = 10;
 
         List<UIDWrapper> wrappers = new ArrayList<>(concurrent);
 

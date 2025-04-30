@@ -48,23 +48,42 @@ public final class RandomGenerator {
             "@", "-", "+", "=", "_"
     };
 
-    private static RandomGenerator instance;
+    /**
+     *  Making instance an "instance" variable causes multiple instances in multithreaded environment
+     * <br>
+     *  consider the case:
+     *  ```
+     *  private static final RandomGenerator instance;
+     *  public static RandomGenerator init() {
+     *       if (instance == null) {
+     *          instance = new RandomGenerator();
+     *       }
+     *
+     *       return instance;
+     *     }
+     *  ```
+     * <br>
+     *
+     * If two threads access "instance" at the same time, they both will see null and will create their own instance.
+     * To solve this, we can create a static final. The second approach to solve it is double-checking-locking
+     *
+     *         if (instance == null) {
+     *             synchronized (RandomGenerator.class) {
+     *                 if (instance == null) {
+     *                     instance = new RandomGenerator();
+     *                 }
+     *             }
+     *         }
+     * */
+    private static final RandomGenerator instance = new RandomGenerator();
 
-    private static final SecureRandom secureRandom;
+    private final SecureRandom secureRandom;
 
-    static {
+    private RandomGenerator() {
         secureRandom = new SecureRandom();
     }
 
-    private RandomGenerator() {
-
-    }
-
     public static RandomGenerator init() {
-        if (instance == null) {
-            instance = new RandomGenerator();
-        }
-
         return instance;
     }
 

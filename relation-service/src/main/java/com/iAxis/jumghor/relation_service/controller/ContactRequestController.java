@@ -3,14 +3,10 @@ package com.iAxis.jumghor.relation_service.controller;
 import com.iAxis.jumghor.entities.dto.ContactRequestDto;
 import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.ContactRequest;
-import com.iAxis.jumghor.entities.entity.User;
 import com.iAxis.jumghor.relation_service.proxy.UserProxy;
 import com.iAxis.jumghor.relation_service.service.ContactRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.iAxis.jumghor.utils.collection.CollectionUtils.isAnyNull;
 
@@ -45,10 +41,6 @@ public class ContactRequestController {
         if (isAnyNull(user1Dto, user2Dto)) {
             return null;
         }
-
-        // todo: check if already friends
-        User user1 = user1Dto.toUser();
-        User user2 = user2Dto.toUser();
 
         ContactRequest contactRequest = new ContactRequest(user1_id, user2_id);
 
