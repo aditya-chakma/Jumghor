@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Size;
  */
 @Table
 @Entity(name = "comment")
-public class Comment extends Persistent<Long> {
+public class Comment extends Persistent {
 
     public static final int MAX_COMMENT_SIZE = 4000;
 

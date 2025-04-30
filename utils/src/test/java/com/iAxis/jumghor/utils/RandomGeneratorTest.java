@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +20,7 @@ public class RandomGeneratorTest {
 
     private static class UIDWrapper implements Runnable {
         Set<Long> uids;
-        int iterations = 1_000;
+        int iterations;
 
         public UIDWrapper(int iterations) {
             uids = new HashSet<>();
@@ -55,7 +56,7 @@ public class RandomGeneratorTest {
 
     @Test
     public void testRandomUUID() throws InterruptedException {
-        int iterations = 1_000;
+        int iterations = 5_000;
         int concurrent = 10;
 
         List<UIDWrapper> wrappers = new ArrayList<>(concurrent);

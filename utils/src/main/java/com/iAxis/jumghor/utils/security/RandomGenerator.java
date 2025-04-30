@@ -16,7 +16,7 @@ public final class RandomGenerator {
     private static volatile long sequence = 0L;
     private static volatile long lastMillis = -1L;
 
-    private static final SecureRandom secureRandom;
+    private final SecureRandom secureRandom;
 
     private static final long MILLIS_EPOCH = 1745660566448L;
     private static final long MAX_TIMESTAMP = (1L << 41) - 1;
@@ -27,10 +27,6 @@ public final class RandomGenerator {
     private static final int SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
 
     private static RandomGenerator instance;
-
-    static {
-        secureRandom = new SecureRandom();
-    }
 
     public enum GeneratorLen {
         L16(16),
@@ -58,6 +54,7 @@ public final class RandomGenerator {
     private static final byte[] dash = "-".getBytes();
 
     private RandomGenerator() {
+        this.secureRandom = new SecureRandom();
     }
 
     public static RandomGenerator init() {

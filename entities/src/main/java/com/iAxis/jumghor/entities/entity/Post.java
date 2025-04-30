@@ -18,7 +18,7 @@ import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
  */
 @Table
 @Entity(name = "post")
-public class Post extends Persistent<Long> {
+public class Post extends Persistent {
 
     public static final int MAX_POST_DETAILS = 30000;
 

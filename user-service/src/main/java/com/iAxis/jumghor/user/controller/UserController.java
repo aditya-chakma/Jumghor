@@ -19,9 +19,6 @@ import java.util.Objects;
 @RequestMapping("/v1/u")
 public class UserController {
 
-    @Value("${server.id}")
-    private int serverId;
-
     private final UserService userService;
 
     public UserController(@Autowired UserService userService) {
@@ -47,7 +44,6 @@ public class UserController {
     @PostMapping("/profile")
     public UserDto createUser(@RequestBody UserDto userDto) {
         User user = userDto.toUser();
-        user.setId(RandomGenerator.init().randomUUID(serverId));
         userService.saveOrUpdate(user);
         return new UserDto(user);
     }

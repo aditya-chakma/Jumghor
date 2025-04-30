@@ -20,7 +20,7 @@ import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
  */
 @Table
 @Entity(name = "app_user")
-public class User extends Persistent<Long> {
+public class User extends Persistent {
 
     public static final int USERNAME_MAX_SIZE = 15;
     public static final int DISPLAYNAME_MAX_SIZE = 64;

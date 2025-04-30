@@ -1,10 +1,10 @@
 #!/bin/sh
 
 ##### publish repos to repository start #####
-cd entities
+cd utils
 mvn clean install
 
-cd ../utils
+cd ../entities
 mvn clean install
 
 cd ..

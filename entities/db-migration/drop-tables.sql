@@ -1,4 +1,4 @@
-drop table comments;
+drop table comment;
 drop table post;
 drop table contact;
 drop table contact_request;

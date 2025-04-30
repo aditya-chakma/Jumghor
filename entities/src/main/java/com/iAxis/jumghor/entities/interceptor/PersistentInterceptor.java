@@ -1,12 +1,13 @@
-package com.iAxis.jumghor.entities.intereceptor;
+package com.iAxis.jumghor.entities.interceptor;
 
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.hibernate.CallbackException;
 import org.hibernate.Interceptor;
 import org.hibernate.type.Type;
-import org.springframework.data.mapping.PersistentEntity;
 import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
 
 import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
 
@@ -15,20 +16,23 @@ import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
  * @since 30 Apr, 2025
  */
 @Component
-public class PersistentInterceptor implements Interceptor {
+public class PersistentInterceptor implements Interceptor, Serializable {
 
     @Override
     public boolean onPersist(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
-        if (entity.getClass().isAssignableFrom(PersistentEntity.class)) {
-                Persistent<?> instance = (Persistent <?>) entity;
+        System.out.println("\n\n\n\n\nTriggering pre persist\n\n\n\n\n");
 
-//                if (!isValidIdentifier(instance.getId()) && instance.getId() instanceof Long) {
-//                    instance.setId(RandomGenerator.init().randomUUID());
-//                }
+        if (Persistent.class.isAssignableFrom(entity.getClass())) {
+            Persistent instance = (Persistent) entity;
 
+            if (!isValidIdentifier(instance.getId())) {
+                instance.setId(RandomGenerator.init().randomUUID());
                 return true;
+            }
         }
 
         return false;
     }
+
+
 }

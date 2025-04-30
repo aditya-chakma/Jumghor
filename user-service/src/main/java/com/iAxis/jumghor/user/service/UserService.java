@@ -2,9 +2,9 @@ package com.iAxis.jumghor.user.service;
 
 import com.iAxis.jumghor.entities.entity.User;
 import com.iAxis.jumghor.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ import static com.iAxis.jumghor.entities.entity.User.CACHE_NAME;
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserService(@Autowired UserRepository userRepository) {
         this.userRepository = userRepository;

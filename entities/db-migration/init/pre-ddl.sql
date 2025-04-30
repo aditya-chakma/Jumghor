@@ -27,7 +27,7 @@ CREATE TABLE post
     CONSTRAINT fk_post_app_user_id FOREIGN KEY (user_id) REFERENCES app_user (id)
 );
 
-CREATE TABLE comments
+CREATE TABLE comment
 (
     id      BIGINT       NOT NULL,
     comment TEXT         NOT NULL,

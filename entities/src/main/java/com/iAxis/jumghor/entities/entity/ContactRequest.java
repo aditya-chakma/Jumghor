@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "contact_request")
-public class ContactRequest extends Persistent<Long> {
+public class ContactRequest extends Persistent {
 
     @Id
     private Long id;
