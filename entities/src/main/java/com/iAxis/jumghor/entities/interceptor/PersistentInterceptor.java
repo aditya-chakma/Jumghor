@@ -20,16 +20,8 @@ public class PersistentInterceptor implements Interceptor, Serializable {
 
     @Override
     public boolean onPersist(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) throws CallbackException {
-        System.out.println("\n\n\n\n\nTriggering pre persist\n\n\n\n\n");
-
-        if (Persistent.class.isAssignableFrom(entity.getClass())) {
-            Persistent instance = (Persistent) entity;
-
-            if (!isValidIdentifier(instance.getId())) {
-                instance.setId(RandomGenerator.init().randomUUID());
-                return true;
-            }
-        }
+        System.out.println("=====Triggering pre persist=======");
+        // todo replace with logs.
 
         return false;
     }

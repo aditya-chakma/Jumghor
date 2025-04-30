@@ -1,9 +1,9 @@
 package com.iAxis.jumghor.entities.entity.interfaces;
 
-import com.iAxis.jumghor.utils.security.RandomGenerator;
+import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,14 +11,16 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
-import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
-
 /**
  * @author aditya.chakma
  * @since 22 Apr, 2025 2:25 PM
  */
 @MappedSuperclass
 public abstract class Persistent {
+
+    @Id
+    @SnowflakeSequence
+    private Long id;
 
     @NotNull
     @CreatedDate
@@ -36,9 +38,13 @@ public abstract class Persistent {
     @Version
     private long version;
 
-    public abstract Long getId();
+    public Long getId() {
+        return id;
+    }
 
-    public abstract void setId(Long id);
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public LocalDateTime getCreated() {
         return created;
@@ -70,13 +76,6 @@ public abstract class Persistent {
 
     public void setVersion(long version) {
         this.version = version;
-    }
-
-    @PrePersist
-    protected void prePersist() {
-        if (!isValidIdentifier(getId())) {
-            setId(RandomGenerator.init().randomUUID());
-        }
     }
 
 }

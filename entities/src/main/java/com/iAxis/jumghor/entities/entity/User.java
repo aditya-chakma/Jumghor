@@ -2,13 +2,11 @@ package com.iAxis.jumghor.entities.entity;
 
 
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
 
@@ -28,9 +26,6 @@ public class User extends Persistent {
     public static final int PASSWORD_HASH_MAX_SIZE = 256;
 
     public static final String CACHE_NAME = "app_user";
-
-    @Id
-    private Long id;
 
     @NotBlank
     @Size(max = USERNAME_MAX_SIZE)
@@ -52,16 +47,6 @@ public class User extends Persistent {
     @Size(max = PASSWORD_HASH_MAX_SIZE)
     @Column(name = "password_hash", nullable = false)
     private String password;
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
