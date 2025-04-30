@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.entities.annotations;
 
-import com.iAxis.jumghor.entities.configs.SnowflakeGenerator;
+import com.iAxis.jumghor.entities.utils.SnowflakeGenerator;
 import org.hibernate.annotations.IdGeneratorType;
 
 import java.lang.annotation.Retention;

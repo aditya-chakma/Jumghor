@@ -3,10 +3,8 @@ package com.iAxis.jumghor.entities.entity;
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.iAxis.jumghor.utils.security.SecurityUtils;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -50,10 +48,13 @@ public class User extends Persistent<Long> {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Transient
+    private String password;
+
     @NotBlank
     @Size(max = PASSWORD_HASH_MAX_SIZE)
     @Column(name = "password_hash", nullable = false)
-    private String password;
+    private String passwordHash;
 
     @Override
     public Long getId() {
@@ -111,6 +112,19 @@ public class User extends Persistent<Long> {
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
+    }
+
+    private String getPasswordHash() {
+        return passwordHash;
+    }
+
+    private void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    @PrePersist
+    private void prePersist() {
+        setPasswordHash(SecurityUtils.encryptPassword(getPassword()));
     }
 
 }

@@ -1,15 +1,18 @@
 package com.iAxis.jumghor.relation_service.controller;
 
+import com.iAxis.jumghor.entities.dto.ContactRequestDto;
 import com.iAxis.jumghor.entities.dto.UserDto;
-import com.iAxis.jumghor.entities.entity.ContactId;
 import com.iAxis.jumghor.entities.entity.ContactRequest;
 import com.iAxis.jumghor.entities.entity.User;
 import com.iAxis.jumghor.relation_service.proxy.UserProxy;
+import com.iAxis.jumghor.relation_service.service.ContactRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.iAxis.jumghor.utils.collection.CollectionUtils.isAnyNull;
 
 /**
  * @author aditya.chakma
@@ -19,24 +22,44 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/cr")
 public class ContactRequestController {
 
-    private UserProxy userProxy;
+    private final UserProxy userProxy;
 
-    public ContactRequestController(@Autowired UserProxy userProxy) {
+    private final ContactRequestService contactRequestService;
+
+    public ContactRequestController(@Autowired UserProxy userProxy, @Autowired ContactRequestService contactRequestService) {
         this.userProxy = userProxy;
+        this.contactRequestService = contactRequestService;
     }
 
+    // todo: remove - added for testing feign
+    @GetMapping("/u/{user_id}")
+    public UserDto getUserById(@PathVariable("user_id") Long userId) {
+        return userProxy.getUser(userId);
+    }
 
-    @PostMapping("/{user1}/r/{user2}")
-    public void contactRequest(@PathVariable long user1_id, @PathVariable long user2_id) {
+    @PostMapping("/{user1_id}/r/{user2_id}")
+    public ContactRequestDto contactRequest(@PathVariable long user1_id, @PathVariable long user2_id) {
         UserDto user1Dto = userProxy.getUser(user1_id);
         UserDto user2Dto = userProxy.getUser(user2_id);
 
-        // check if already friends
+        if (isAnyNull(user1Dto, user2Dto)) {
+            return null;
+        }
+
+        // todo: check if already friends
         User user1 = user1Dto.toUser();
         User user2 = user2Dto.toUser();
 
-        ContactRequest contactRequest = new ContactRequest(user1, user2);
+        ContactRequest contactRequest = new ContactRequest(user1_id, user2_id);
 
+        contactRequest = contactRequestService.saveOrUpdate(contactRequest);
+
+        return new ContactRequestDto(contactRequest, user1Dto, user2Dto);
     }
+
+//    @GetMapping("/all")
+//    public List<ContactRequestDto> getAll() {
+//
+//    }
 
 }

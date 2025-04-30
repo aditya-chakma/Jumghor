@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.entities.configs;
+package com.iAxis.jumghor.entities.utils;
 
 import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;

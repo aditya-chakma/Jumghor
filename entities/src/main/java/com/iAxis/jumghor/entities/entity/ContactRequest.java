@@ -18,21 +18,19 @@ public class ContactRequest extends Persistent<Long> {
     private Long id;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "from_id", nullable = false, updatable = false)
-    private User fromUser;
+    @Column(name = "from_id", updatable = false, nullable = false)
+    private Long fromId;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "to_id", nullable = false, updatable = false)
-    private User toUser;
+    @Column(name = "to_id", updatable = false, nullable = false)
+    private Long toId;
 
     public ContactRequest() {
     }
 
-    public ContactRequest(User fromUser, User toUser) {
-        this.fromUser = fromUser;
-        this.toUser = toUser;
+    public ContactRequest(Long fromId, Long toId) {
+        this.fromId = fromId;
+        this.toId = toId;
     }
 
     @Override
@@ -45,20 +43,19 @@ public class ContactRequest extends Persistent<Long> {
         this.id = id;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public Long getFromId() {
+        return fromId;
     }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
+    public void setFromId(Long fromId) {
+        this.fromId = fromId;
     }
 
-    public User getToUser() {
-        return toUser;
+    public Long getToId() {
+        return toId;
     }
 
-    public void setToUser(User toUser) {
-        this.toUser = toUser;
+    public void setToId(Long toId) {
+        this.toId = toId;
     }
-
 }

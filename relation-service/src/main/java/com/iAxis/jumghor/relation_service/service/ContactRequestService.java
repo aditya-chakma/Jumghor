@@ -2,11 +2,10 @@ package com.iAxis.jumghor.relation_service.service;
 
 import com.iAxis.jumghor.entities.entity.ContactRequest;
 import com.iAxis.jumghor.relation_service.repository.ContactRequestRepository;
-import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author aditya.chakma
@@ -24,11 +23,11 @@ public class ContactRequestService {
         this.contactRequestRepository = contactRequestRepository;
     }
 
-    public ContactRequest save(ContactRequest contactRequest) {
-        contactRequest.setId(RandomGenerator.init().randomUUID(serverId));
-        contactRequest.setCreated(LocalDateTime.now());
-        contactRequest.setUpdated(LocalDateTime.now());
+    public List<ContactRequest> findAll() {
+        return contactRequestRepository.findAll();
+    }
 
+    public ContactRequest saveOrUpdate(ContactRequest contactRequest) {
         return contactRequestRepository.save(contactRequest);
     }
 

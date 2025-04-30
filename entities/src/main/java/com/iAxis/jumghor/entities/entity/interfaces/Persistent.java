@@ -1,13 +1,15 @@
 package com.iAxis.jumghor.entities.entity.interfaces;
 
-import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
@@ -16,12 +18,14 @@ import java.time.LocalDateTime;
  * @since 22 Apr, 2025 2:25 PM
  */
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class Persistent<T> {
 
     @NotNull
     @CreatedDate
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
+
 
     @NotNull
     @LastModifiedDate

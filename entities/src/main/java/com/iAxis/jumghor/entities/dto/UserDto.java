@@ -7,8 +7,6 @@ import com.iAxis.jumghor.entities.entity.User;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * @author aditya.chakma
@@ -92,8 +90,6 @@ public class UserDto implements Serializable {
         user.setDisplayName(displayName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setCreated(LocalDateTime.now());
-        user.setUpdated(LocalDateTime.now());
 
         return user;
     }

@@ -13,21 +13,6 @@ import java.security.SecureRandom;
  */
 public final class RandomGenerator {
 
-    private static volatile long sequence = 0L;
-    private static volatile long lastMillis = -1L;
-
-    private final SecureRandom secureRandom;
-
-    private static final long MILLIS_EPOCH = 1745660566448L;
-    private static final long MAX_TIMESTAMP = (1L << 41) - 1;
-    private static final int TIMESTAMP_BITS = 41;
-    private static final int SERVER_ID_BITS = 10;
-    private static final int SEQUENCE_BITS = 12;
-    private static final int SERVER_ID_MASK = (1 << SERVER_ID_BITS) - 1;
-    private static final int SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
-
-    private static RandomGenerator instance;
-
     public enum GeneratorLen {
         L16(16),
         L32(32),
@@ -44,6 +29,18 @@ public final class RandomGenerator {
         }
     }
 
+    private static volatile long sequence = 0L;
+    private static volatile long lastMillis = -1L;
+
+    private static final long MILLIS_EPOCH = 1745660566448L;
+    private static final long MAX_TIMESTAMP = (1L << 41) - 1;
+    private static final int TIMESTAMP_BITS = 41;
+    private static final int SERVER_ID_BITS = 10;
+    private static final int SEQUENCE_BITS = 12;
+    private static final int SERVER_ID_MASK = (1 << SERVER_ID_BITS) - 1;
+    private static final int SEQUENCE_MASK = (1 << SEQUENCE_BITS) - 1;
+
+    private static final byte[] dash = "-".getBytes();
     private static final String[] symbolPool = new String[]{
             "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
             "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -51,10 +48,16 @@ public final class RandomGenerator {
             "@", "-", "+", "=", "_"
     };
 
-    private static final byte[] dash = "-".getBytes();
+    private static RandomGenerator instance;
+
+    private static final SecureRandom secureRandom;
+
+    static {
+        secureRandom = new SecureRandom();
+    }
 
     private RandomGenerator() {
-        this.secureRandom = new SecureRandom();
+
     }
 
     public static RandomGenerator init() {
