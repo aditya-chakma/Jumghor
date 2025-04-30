@@ -16,11 +16,7 @@ import java.time.LocalDateTime;
  * @since 22 Apr, 2025 2:25 PM
  */
 @MappedSuperclass
-public abstract class Persistent {
-
-    @Id
-    @SnowflakeSequence
-    private Long id;
+public abstract class Persistent<T> {
 
     @NotNull
     @CreatedDate
@@ -38,13 +34,9 @@ public abstract class Persistent {
     @Version
     private long version;
 
-    public Long getId() {
-        return id;
-    }
+    public abstract T getId();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public abstract void setId(T id);
 
     public LocalDateTime getCreated() {
         return created;

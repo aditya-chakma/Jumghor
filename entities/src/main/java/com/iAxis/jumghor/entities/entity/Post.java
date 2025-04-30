@@ -1,6 +1,7 @@
 package com.iAxis.jumghor.entities.entity;
 
 
+import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,11 +19,12 @@ import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
  */
 @Table
 @Entity(name = "post")
-public class Post extends Persistent {
+public class Post extends Persistent<Long> {
 
     public static final int MAX_POST_DETAILS = 30000;
 
     @Id
+    @SnowflakeSequence
     private Long id;
 
     @NotBlank

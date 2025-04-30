@@ -1,5 +1,6 @@
 package com.iAxis.jumghor.entities.entity;
 
+import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -10,9 +11,10 @@ import jakarta.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "contact_request")
-public class ContactRequest extends Persistent {
+public class ContactRequest extends Persistent<Long> {
 
     @Id
+    @SnowflakeSequence
     private Long id;
 
     @NotNull
