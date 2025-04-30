@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @since 22 Apr, 2025 2:25 PM
  */
 @MappedSuperclass
-public abstract class Persistent<T> {
+public abstract class Persistent<T extends Number> {
 
     @NotNull
     @CreatedDate
