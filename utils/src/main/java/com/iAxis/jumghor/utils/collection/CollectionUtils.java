@@ -6,6 +6,10 @@ package com.iAxis.jumghor.utils.collection;
  */
 public final class CollectionUtils {
 
+    /**
+     * Returns true if any of the objects is null<br>
+     * Returns false otherwise
+     * */
     public static boolean isAnyNull(Object... objects) {
         assert objects != null;
 

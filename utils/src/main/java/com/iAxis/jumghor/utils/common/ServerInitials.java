@@ -4,6 +4,7 @@ package com.iAxis.jumghor.utils.common;
  * @author aditya.chakma
  * @since 24 Apr, 2025 3:35 PM
  */
+// todo: might remove later if not needed. Added for ID generation
 public enum ServerInitials {
     //server initials must be of - characters
     DEFAULT("default"),
