@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.iAxis.jumghor.entities.interceptor"
 })
 @EntityScan("com.iAxis.jumghor.entities.entity")
-@EnableJpaRepositories
 @EnableCaching // todo: disable this annotation
 @SpringBootApplication
 public class UserServiceApplication {
