@@ -10,13 +10,16 @@ import java.security.SecureRandom;
 /**
  * This is an implementation of Twitters Snowflake algorithm,
  * a UUID generator in distributed system
+ * <p>
+ * Available methods: {@link #init()}, {@link #randomUUID(int)}, {@link #randomSecureString(GeneratorLen)}
  */
 public final class RandomGenerator {
 
     public enum GeneratorLen {
         L16(16),
         L32(32),
-        L64(64);
+        L64(64),
+        L128(128);
 
         private final int len;
 
@@ -49,10 +52,12 @@ public final class RandomGenerator {
     };
 
     /**
-     *  Making instance an "instance" variable causes multiple instances in multithreaded environment
+     * BugNote: <br>
+     * Making instance an "instance" variable causes multiple instances in multithreaded environment
      * <br>
-     *  consider the case:
-     *  ```
+     * consider the case:
+     *
+     * <pre>{@code
      *  private static final RandomGenerator instance;
      *  public static RandomGenerator init() {
      *       if (instance == null) {
@@ -61,20 +66,24 @@ public final class RandomGenerator {
      *
      *       return instance;
      *     }
-     *  ```
-     * <br>
+     *  }</pre>
      *
+     * <br>
+     * <p>
      * If two threads access "instance" at the same time, they both will see null and will create their own instance.
      * To solve this, we can create a static final. The second approach to solve it is double-checking-locking
-     *
-     *         if (instance == null) {
+     * <pre>
+     *     {@code
+     *     if (instance == null) {
      *             synchronized (RandomGenerator.class) {
      *                 if (instance == null) {
      *                     instance = new RandomGenerator();
      *                 }
      *             }
      *         }
-     * */
+     *     }
+     * </pre>
+     */
     private static final RandomGenerator instance = new RandomGenerator();
 
     private final SecureRandom secureRandom;
@@ -83,16 +92,61 @@ public final class RandomGenerator {
         secureRandom = new SecureRandom();
     }
 
+    /**
+     * Returns a RandomGenerator object instance. Must access through `init()` method.
+     *
+     * @return an instance of RandomGenerator
+     */
     public static RandomGenerator init() {
         return instance;
     }
 
+    /**
+     * <b>
+     * This method is deprecated. Use {@link #randomUUID(int serverId)} instead.
+     * </b>
+     * Returns a 64 bit UUID. Uses 101 as default machineId
+     *
+     * @return 64 bit UUID.
+     */
+    @Deprecated
     public long randomUUID() {
         return randomUUID(101);
     }
 
     /**
-     * returns a 64 bit UUID
+     * Returns a 64 bit UUID based on the snowflake algorithm. Bits distribution:
+     *
+     * <table>
+     *     <tr>
+     *         <th>Bits</th>
+     *         <th>Range</th>
+     *         <th>Data</th>
+     *     </tr>
+     *     <tr>
+     *         <td>1</td>
+     *         <td>64-64</td>
+     *         <td>Sign bit</td>
+     *     </tr>
+     *     <tr>
+     *         <td>41</td>
+     *         <td>23-63</td>
+     *         <td>Time based</td>
+     *     </tr>
+     *     <tr>
+     *         <td>10</td>
+     *         <td>13-22</td>
+     *         <td>Machine/server id</td>
+     *     </tr>
+     *     <tr>
+     *         <td>12</td>
+     *         <td>1-12</td>
+     *         <td>Sequence</td>
+     *     </tr>
+     * </table>
+     *
+     * @param serverId server or machine id
+     * @return 64 bit UUID
      */
     public long randomUUID(int serverId) {
         long serverBits = getServerBits(serverId);
@@ -125,6 +179,9 @@ public final class RandomGenerator {
 
     /**
      * Generates a cryptographically secure random String
+     *
+     * @param generatorLen Length of the string generated
+     * @return a cryptographically secure random string from a symbol pool
      */
     public String randomSecureString(GeneratorLen generatorLen) {
         int len = generatorLen.getLen();
@@ -138,8 +195,7 @@ public final class RandomGenerator {
         return sb.toString();
     }
 
-
-    public long getMillis() {
+    private long getMillis() {
         long millis = System.currentTimeMillis() - MILLIS_EPOCH;
         return millis & MAX_TIMESTAMP;
     }

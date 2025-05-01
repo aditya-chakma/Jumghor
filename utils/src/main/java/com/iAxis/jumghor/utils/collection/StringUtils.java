@@ -6,6 +6,10 @@ package com.iAxis.jumghor.utils.collection;
  */
 public final class StringUtils {
 
+    /**
+     * Returns true if the string is <b>null</b> or <b>empty</b><br>
+     * Returns false otherwise
+     * */
     public static boolean isEmpty(String s) {
         return s == null || s.isEmpty();
     }

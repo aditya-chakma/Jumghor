@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author aditya.chakma
  * @since 24 Apr, 2025
  */
-
 public class RandomGeneratorTest {
 
     private static class UIDWrapper implements Runnable {
         Set<Long> uids;
         int iterations;
+        int serverId = 971;
 
         public UIDWrapper(int iterations) {
             uids = new HashSet<>();
@@ -30,7 +30,7 @@ public class RandomGeneratorTest {
         @Override
         public void run() {
             for (int i = 0; i < iterations; i++) {
-                uids.add(RandomGenerator.init().randomUUID());
+                uids.add(RandomGenerator.init().randomUUID(serverId));
             }
         }
 
@@ -56,7 +56,7 @@ public class RandomGeneratorTest {
 
     @Test
     public void testRandomUUID() throws InterruptedException {
-        int iterations = 5_00;
+        int iterations = 5_000;
         int concurrent = 10;
 
         List<UIDWrapper> wrappers = new ArrayList<>(concurrent);
