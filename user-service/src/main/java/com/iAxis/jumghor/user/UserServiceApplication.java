@@ -5,12 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @ComponentScan(basePackages = {
         "com.iAxis.jumghor.user",
         "com.iAxis.jumghor.entities.configs",
-        "com.iAxis.jumghor.entities.interceptor"
+        "com.iAxis.jumghor.entities.utils"
 })
 @EntityScan("com.iAxis.jumghor.entities.entity")
 @EnableCaching // todo: disable this annotation
