@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+input {
+    @apply border-2 border-gray-500;
+}
+
+.input-default {
+    @apply border-2 border-cyan-300;
+}

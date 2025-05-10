@@ -20,49 +20,52 @@ const RegisterUser = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="displayName">Display Name: </label>
-                <input
-                    id="displayName"
-                    name="displayName"
-                    type="text"
-                    value={user.displayName}
-                    onChange={(e) => setUser({ ...user, displayName: e.target.value })}
-                ></input>
-                <br />
+            <div className="container mx-auto px-4">
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="display-name">Display Name: </label>
+                    <input
+                        className="input-default"
+                        id="display-name"
+                        name="display-name"
+                        type="text"
+                        value={user.displayName}
+                        onChange={(e) => setUser({ ...user, displayName: e.target.value })}
+                    ></input>
+                    <br />
 
-                <label htmlFor="userName">User Name: </label>
-                <input
-                    id="userName"
-                    name="userName"
-                    type="text"
-                    value={user.userName}
-                    onChange={(e) => setUser({ ...user, userName: e.target.value })}
-                ></input>
-                <br />
+                    <label htmlFor="user-name">User Name: </label>
+                    <input
+                        id="user-name"
+                        name="user-name"
+                        type="text"
+                        value={user.userName}
+                        onChange={(e) => setUser({ ...user, userName: e.target.value })}
+                    ></input>
+                    <br />
 
-                <label htmlFor="email">Email: </label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={user.email}
-                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                ></input>
-                <br />
+                    <label htmlFor="email">Email: </label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={user.email}
+                        onChange={(e) => setUser({ ...user, email: e.target.value })}
+                    ></input>
+                    <br />
 
-                <label htmlFor="password">Password: </label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={user.password}
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                ></input>
-                <br />
+                    <label htmlFor="password">Password: </label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={user.password}
+                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                    ></input>
+                    <br />
 
-                <button type="submit">Register</button>
-            </form>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
         </>
     );
 };
