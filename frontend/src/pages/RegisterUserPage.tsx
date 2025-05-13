@@ -22,7 +22,7 @@ const RegisterUserPage = () => {
     return (
         <>
             <main>
-                <div className="flex justify-between m-16 mt-0 mb-0">
+                <div className="flex flex-row max-sm:flex-col justify-around m-16 mt-0 mb-0">
                     <div
                         className="flex flex-col justify-center gap-3 p-3 m-3"
                         style={{ minWidth: "300px", minHeight: "300px", background: "skyblue" }}
