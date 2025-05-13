@@ -1,5 +1,5 @@
 const Header = () => {
-    return <h2>Header</h2>;
+    return <header style={{ minHeight: "10px", background: "gray" }}>Header</header>;
 };
 
 export default Header;

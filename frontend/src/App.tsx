@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import RegisterUser from "./pages/RegisterUser";
+import RegisterUserPage from "./pages/RegisterUserPage";
 import Profile from "./pages/profile/Profile";
 
 function App() {
     return (
         <Routes>
-            <Route path="/" element={<RegisterUser />} />
+            <Route path="/" element={<RegisterUserPage />} />
             <Route path="/profile" element={<Profile />} />
         </Routes>
     );
