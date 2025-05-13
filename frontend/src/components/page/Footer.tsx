@@ -1,5 +1,5 @@
 const Footer = () => {
-    return <h2>Footer</h2>;
+    return <footer style={{ minHeight: "10px", background: "gray" }}>Footer</footer>;
 };
 
 export default Footer;
