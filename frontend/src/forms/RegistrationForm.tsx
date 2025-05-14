@@ -4,18 +4,18 @@ import type { User } from "../interfaces/User";
 interface RegistrationFormProps {
     user: User;
     handleUser: (user: User) => void;
+    registerUser: () => void;
 }
 
-const RegistrationForm = ({ user, handleUser }: RegistrationFormProps) => {
+const RegistrationForm = ({ user, handleUser, registerUser }: RegistrationFormProps) => {
     const handleSubmit = (e) => {
         console.log("Click click!");
         handleUser(user);
+        registerUser();
     };
 
     const handleChange = (e: React.ChangeEvent) => {
         const { id, value } = e.target;
-
-        console.log("Handling change!: name: " + name);
         handleUser({ ...user, [id]: value });
     };
 
@@ -75,7 +75,7 @@ const RegistrationForm = ({ user, handleUser }: RegistrationFormProps) => {
                                 id="confirmPassword"
                                 type="password"
                                 placeholder="Confirm Password"
-                                value={user.password}
+                                value={user.confirmPassword}
                                 onChange={handleChange}
                             />
                         </div>
