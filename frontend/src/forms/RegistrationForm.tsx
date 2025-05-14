@@ -1,6 +1,22 @@
-const RegistrationForm = () => {
+import React, { use } from "react";
+import type { User } from "../interfaces/User";
+
+interface RegistrationFormProps {
+    user: User;
+    handleUser: (user: User) => void;
+}
+
+const RegistrationForm = ({ user, handleUser }: RegistrationFormProps) => {
     const handleSubmit = (e) => {
         console.log("Click click!");
+        handleUser(user);
+    };
+
+    const handleChange = (e: React.ChangeEvent) => {
+        const { id, value } = e.target;
+
+        console.log("Handling change!: name: " + name);
+        handleUser({ ...user, [id]: value });
     };
 
     return (
@@ -10,28 +26,58 @@ const RegistrationForm = () => {
                     <h2 className="text-center font-medium">Create an account</h2>
                     <div className="grid grid-rows-1 gap-2">
                         <div className="flex flex-col">
-                            <label htmlFor="user-name">User Name</label>
-                            <input id="user-name" type="text" placeholder="User Name" />
+                            <label htmlFor="userName">User Name</label>
+                            <input
+                                id="userName"
+                                type="text"
+                                placeholder="User Name"
+                                value={user.userName}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="display-name">Display Name</label>
-                            <input id="display-name" type="text" placeholder="Display name" />
+                            <label htmlFor="displayName">Display Name</label>
+                            <input
+                                id="displayName"
+                                type="text"
+                                placeholder="Display name"
+                                value={user.displayName}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="flex flex-col">
                             <label htmlFor="email">Email</label>
-                            <input id="email" type="text" placeholder="Email" />
+                            <input
+                                id="email"
+                                type="text"
+                                placeholder="Email"
+                                value={user.email}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="flex flex-col">
                             <label htmlFor="password">Password</label>
-                            <input id="password" type="password" placeholder="Password" />
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                                value={user.password}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="flex flex-col">
-                            <label htmlFor="confirm-password">Confirm Password</label>
-                            <input id="confirm-password" type="password" placeholder="Confirm Password" />
+                            <label htmlFor="confirmPassword">Confirm Password</label>
+                            <input
+                                id="confirmPassword"
+                                type="password"
+                                placeholder="Confirm Password"
+                                value={user.password}
+                                onChange={handleChange}
+                            />
                         </div>
 
                         <div className="flex justify-center">
