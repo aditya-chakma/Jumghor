@@ -1,13 +1,15 @@
 import { useState } from "react";
 import submit from "../utils/FormSubmitUtils";
 import RegistrationForm from "../forms/RegistrationForm";
+import type { User } from "../interfaces/User";
 
 const RegisterUserPage = () => {
-    const [user, setUser] = useState({
-        displayName: "",
+    const [user, setUser] = useState<User>({
         userName: "",
+        displayName: "",
         email: "",
         password: "",
+        configrmPasswor: "",
     });
 
     const registerUser = async () => {
@@ -15,8 +17,11 @@ const RegisterUserPage = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         registerUser();
+    };
+
+    const handleUser = (u: User) => {
+        setUser(u);
     };
 
     return (
@@ -32,7 +37,7 @@ const RegisterUserPage = () => {
                         <p className="text-center text-3xl">Join Now </p>
                     </div>
                     <div>
-                        <RegistrationForm />
+                        <RegistrationForm handleUser={handleUser} user={user} />
                     </div>
                 </div>
             </main>
