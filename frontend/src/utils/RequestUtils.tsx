@@ -16,3 +16,18 @@ async function submit(url: string, user: { displayName: string; userName: string
 }
 
 export default submit;
+
+export const fetchRequest = async (url: string) => {
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        alert("Error getting Request");
+    }
+};

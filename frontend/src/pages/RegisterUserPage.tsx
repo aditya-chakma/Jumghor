@@ -1,5 +1,5 @@
 import { useState } from "react";
-import submit from "../utils/FormSubmitUtils";
+import submit from "../utils/RequestUtils";
 import RegistrationForm from "../forms/RegistrationForm";
 import type { User } from "../interfaces/User";
 
@@ -9,14 +9,14 @@ const RegisterUserPage = () => {
         displayName: "",
         email: "",
         password: "",
-        configrmPasswor: "",
+        confirmPassword: "",
     });
 
     const registerUser = async () => {
         submit("http://localhost:8100/v1/u/profile", user);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
         registerUser();
     };
 
@@ -37,7 +37,7 @@ const RegisterUserPage = () => {
                         <p className="text-center text-3xl">Join Now </p>
                     </div>
                     <div>
-                        <RegistrationForm handleUser={handleUser} user={user} />
+                        <RegistrationForm handleUser={handleUser} user={user} registerUser={handleSubmit} />
                     </div>
                 </div>
             </main>
