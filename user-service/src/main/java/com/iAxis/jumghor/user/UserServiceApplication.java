@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
         "com.iAxis.jumghor.user",
         "com.iAxis.jumghor.entities.configs",
         "com.iAxis.jumghor.entities.utils",
-        "com.iAxis.jumghor.utils.config"
+        "com.iAxis.jumghor.utils.config" // cache config
 })
 @EntityScan("com.iAxis.jumghor.entities.entity")
 @SpringBootApplication

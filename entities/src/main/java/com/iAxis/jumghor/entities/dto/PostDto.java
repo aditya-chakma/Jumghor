@@ -15,6 +15,8 @@ public class PostDto implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
     private String details;
 
     private int likes;
@@ -22,12 +24,22 @@ public class PostDto implements Serializable {
     @JsonProperty("user")
     private UserDto userDto;
 
-    public PostDto() {}
+    public PostDto() {
+    }
 
-    public PostDto(Post post) {
+    public PostDto(Post post, UserDto userDto) {
+        this.id = post.getId();
         this.details = post.getDetails();
         this.likes = post.getLikes();
-        this.userDto = new UserDto(post.getUser());
+        this.userDto = userDto;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDetails() {
@@ -53,4 +65,14 @@ public class PostDto implements Serializable {
     public void setUserDto(UserDto userDto) {
         this.userDto = userDto;
     }
+
+    public Post toPost() {
+        Post post = new Post();
+
+        post.setId(this.id);
+        post.setDetails(details);
+
+        return post;
+    }
+
 }

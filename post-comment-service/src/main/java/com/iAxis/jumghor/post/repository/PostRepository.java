@@ -1,8 +1,8 @@
 package com.iAxis.jumghor.post.repository;
 
 import com.iAxis.jumghor.entities.entity.Post;
-import com.iAxis.jumghor.entities.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> getAllByUser(User user);
+    @Query("SELECT p FROM Post p WHERE p.userId = :user_id")
+    List<Post> findAllByUserId(Long user_id);
 
 }

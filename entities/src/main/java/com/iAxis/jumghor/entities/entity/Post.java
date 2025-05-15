@@ -17,8 +17,8 @@ import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
  * @author aditya.chakma
  * @since 09 Mar, 2025
  */
-@Table
-@Entity(name = "post")
+@Entity
+@Table(name = "post")
 public class Post extends Persistent<Long> {
 
     public static final int MAX_POST_DETAILS = 30000;
@@ -36,12 +36,8 @@ public class Post extends Persistent<Long> {
     private int likes;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> commentsList;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Override
     public Long getId() {
@@ -69,20 +65,12 @@ public class Post extends Persistent<Long> {
         this.likes = likes;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Comment> getCommentsList() {
-        return commentsList;
-    }
-
-    public void setCommentsList(List<Comment> commentsList) {
-        this.commentsList = commentsList;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public boolean isNew() {
