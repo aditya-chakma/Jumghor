@@ -2,7 +2,10 @@ package com.iAxis.jumghor.entities.entity;
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,8 +14,8 @@ import jakarta.validation.constraints.Size;
  * @author aditya.chakma
  * @since 24 Apr, 2025 12:24 PM
  */
-@Table
-@Entity(name = "comment")
+@Entity
+@Table(name = "comment")
 public class Comment extends Persistent<Long> {
 
     public static final int MAX_COMMENT_SIZE = 4000;
@@ -30,14 +33,12 @@ public class Comment extends Persistent<Long> {
     private int likes;
 
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @NotNull
-    @ManyToOne
-    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
-    private Post post;
+    @Column(name = "post_id", nullable = false)
+    private Long postId;
 
     @Override
     public Long getId() {
@@ -65,20 +66,19 @@ public class Comment extends Persistent<Long> {
         this.likes = likes;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Post getPost() {
-        return post;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
-
 }

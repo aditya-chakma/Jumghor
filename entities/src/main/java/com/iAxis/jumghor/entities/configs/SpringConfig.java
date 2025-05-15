@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * @since 30 Apr, 2025
  */
 @Configuration
-@EnableJpaAuditing
+@EnableJpaAuditing // jpa auditing needed for id generation
 public class SpringConfig {
 }
