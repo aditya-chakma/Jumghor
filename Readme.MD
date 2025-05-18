@@ -45,7 +45,8 @@ Port range and description for microservices. The port ranges might change later
 | Post and Comment Service | 221 | Serves Post and comment services. Supports CRUD operations for post and comments                         | post-comment-services | (default: 8221) 8200-8299 |
 | Relation Service         | 379 | Serves contact request, add contact and follower/followee services.                                      | relation-service      | (default: 8379) 8300-8399 |
 | User Service             | 100 | Serves CRUD operation for user services.                                                                 | user-service          | (default: 8100) 8100-8199 |
-| Config Server            | 888 | Config server provides configurations to it's clients. Config server centralizes the configurations      | config-server         | (default: 8888) 8800-8899 |
+| Config Server            | 888 | Config server provides configurations to it's clients. Config server centralizes the configurations      | config-server         | (default: 8888) 8850-8899 |
+| API Gateway              | 833 | Api gateway provides routes for the microservices. Provides non-blocking I/O based.                      | api-gateway           | (default: 8833) 8800-8849 |
 
 ## Modules
 
