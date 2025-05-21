@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.post.service;
 
-import com.iAxis.jumghor.entities.entity.Comment;
+import com.iAxis.jumghor.post.entity.Comment;
 import com.iAxis.jumghor.post.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

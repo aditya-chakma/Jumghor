@@ -1,7 +1,6 @@
 package com.iAxis.jumghor.entities.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.iAxis.jumghor.entities.entity.Comment;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,17 +17,12 @@ public class CommentDto implements Serializable {
     private String comment;
 
     @JsonProperty(value = "", access = JsonProperty.Access.WRITE_ONLY)
-    private Long userId;
+    private Integer likes;
 
     @JsonProperty("user")
     private UserDto userDto;
 
     public CommentDto() {
-    }
-
-    public CommentDto(Comment comment, UserDto userDto) {
-        this.comment = comment.getComment();
-        this.userDto = userDto;
     }
 
     public String getComment() {
@@ -39,12 +33,12 @@ public class CommentDto implements Serializable {
         this.comment = comment;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Integer getLikes() {
+        return likes;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setLikes(Integer likes) {
+        this.likes = likes;
     }
 
     public UserDto getUserDto() {
@@ -53,15 +47,6 @@ public class CommentDto implements Serializable {
 
     public void setUserDto(UserDto userDto) {
         this.userDto = userDto;
-    }
-
-    public Comment toComment() {
-        Comment comment = new Comment();
-
-        comment.setComment(this.comment);
-        comment.setUserId(this.userId);
-
-        return comment;
     }
 
 }

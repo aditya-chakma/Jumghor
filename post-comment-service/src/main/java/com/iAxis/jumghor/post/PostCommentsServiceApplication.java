@@ -11,8 +11,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "com.iAxis.jumghor.post",
         "com.iAxis.jumghor.entities.configs" // enabling jpa auditing
 })
-@EntityScan("com.iAxis.jumghor.entities.entity")
-@EnableJpaRepositories
+@EntityScan(basePackages = {
+        "com.iAxis.jumghor.post",
+        "com.iAxis.jumghor.entities.entity"
+})
 @SpringBootApplication
 @EnableFeignClients
 public class PostCommentsServiceApplication {

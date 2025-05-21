@@ -1,11 +1,9 @@
 package com.iAxis.jumghor.user.controller;
 
 import com.iAxis.jumghor.entities.dto.UserDto;
-import com.iAxis.jumghor.entities.entity.User;
+import com.iAxis.jumghor.user.entity.User;
 import com.iAxis.jumghor.user.service.UserService;
-import com.iAxis.jumghor.utils.security.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.Objects;
  * @since 22 Apr, 2025 3:16 PM
  */
 @RestController
-@RequestMapping("/v1/u")
+@RequestMapping("/v1/users")
 public class UserController {
 
     private final UserService userService;
@@ -25,12 +23,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public List<UserDto> getAll() {
-        return userService.findAll().stream().map(UserDto::new).toList();
+        return userService.findAll().stream().map(User::to).toList();
     }
 
-    @GetMapping("/profile/{user_id}")
+    @GetMapping("/{user_id}")
     public UserDto getUser(@PathVariable("user_id") long id) {
         User user = userService.findById(id);
 
@@ -38,19 +36,19 @@ public class UserController {
             return null;
         }
 
-        return new UserDto(user);
+        return user.to();
     }
 
-    @PostMapping("/profile")
+    @PostMapping
     public UserDto createUser(@RequestBody UserDto userDto) {
-        User user = userDto.toUser();
+        User user = User.from(userDto);
         userService.saveOrUpdate(user);
-        return new UserDto(user);
+        return user.to();
     }
 
-    @PatchMapping("/profile")
+    @PatchMapping
     public UserDto updateUser(@RequestBody UserDto userDto) {
-        User user = userDto.toUser();
+        User user = User.from(userDto);
         User oldUser = userService.findByUserName(user.getUserName());
 
         oldUser.setUserName(user.getUserName());
@@ -60,7 +58,7 @@ public class UserController {
 
         userService.saveOrUpdate(oldUser);
 
-        return new UserDto(user);
+        return oldUser.to();
     }
 
 //    @PatchMapping("/friend/{user_id}/{friend_id}")

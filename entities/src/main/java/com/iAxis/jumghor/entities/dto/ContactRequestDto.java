@@ -1,7 +1,5 @@
 package com.iAxis.jumghor.entities.dto;
 
-import com.iAxis.jumghor.entities.entity.ContactRequest;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -24,13 +22,6 @@ public class ContactRequestDto implements Serializable {
     private LocalDateTime created;
 
     public ContactRequestDto() {
-    }
-
-    public ContactRequestDto(ContactRequest contactRequest, UserDto fromUser, UserDto toUser) {
-        this.id = contactRequest.getId();
-        this.created = contactRequest.getCreated();
-        this.fromUser = fromUser;
-        this.toUser = toUser;
     }
 
     public long getId() {

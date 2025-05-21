@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author aditya.chakma
  * @since 15 May, 2025 11:51 AM
  */
-@FeignClient(name = "user-service", path = "/v1/u")
+@FeignClient(name = "user-service", path = "/v1/users")
 public interface UserProxy {
 
-    @GetMapping("/profile/{userId}")
+    @GetMapping("/{userId}")
     UserDto getUser(@PathVariable Long userId);
 
 }
