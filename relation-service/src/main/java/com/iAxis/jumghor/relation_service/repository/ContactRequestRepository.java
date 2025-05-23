@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.relation_service.repository;
 
-import com.iAxis.jumghor.entities.entity.ContactRequest;
+import com.iAxis.jumghor.relation_service.entity.ContactRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

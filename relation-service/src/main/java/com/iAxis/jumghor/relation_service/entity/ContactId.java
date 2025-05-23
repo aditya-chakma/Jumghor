@@ -1,9 +1,7 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.relation_service.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;

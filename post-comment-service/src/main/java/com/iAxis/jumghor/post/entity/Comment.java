@@ -1,6 +1,8 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.post.entity;
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
+import com.iAxis.jumghor.entities.dto.CommentDto;
+import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -81,4 +83,25 @@ public class Comment extends Persistent<Long> {
     public void setPostId(Long postId) {
         this.postId = postId;
     }
+
+    public static Comment from(CommentDto commentDto) {
+        Comment comment = new Comment();
+
+        comment.setComment(commentDto.getComment());
+        comment.setLikes(comment.getLikes());
+        comment.setUserId(commentDto.getUserDto().getId());
+
+        return comment;
+    }
+
+    public CommentDto to(UserDto userDto) {
+        CommentDto commentDto = new CommentDto();
+
+        commentDto.setComment(getComment());
+        commentDto.setLikes(getLikes());
+        commentDto.setUserDto(userDto);
+
+        return commentDto;
+    }
+
 }

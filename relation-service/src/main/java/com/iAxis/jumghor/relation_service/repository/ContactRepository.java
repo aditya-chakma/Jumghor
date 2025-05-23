@@ -1,7 +1,7 @@
 package com.iAxis.jumghor.relation_service.repository;
 
-import com.iAxis.jumghor.entities.entity.Contact;
-import com.iAxis.jumghor.entities.entity.ContactId;
+import com.iAxis.jumghor.relation_service.entity.Contact;
+import com.iAxis.jumghor.relation_service.entity.ContactId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

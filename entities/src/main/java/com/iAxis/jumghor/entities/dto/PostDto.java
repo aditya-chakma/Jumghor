@@ -1,7 +1,6 @@
 package com.iAxis.jumghor.entities.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.iAxis.jumghor.entities.entity.Post;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -25,13 +24,6 @@ public class PostDto implements Serializable {
     private UserDto userDto;
 
     public PostDto() {
-    }
-
-    public PostDto(Post post, UserDto userDto) {
-        this.id = post.getId();
-        this.details = post.getDetails();
-        this.likes = post.getLikes();
-        this.userDto = userDto;
     }
 
     public Long getId() {
@@ -64,15 +56,6 @@ public class PostDto implements Serializable {
 
     public void setUserDto(UserDto userDto) {
         this.userDto = userDto;
-    }
-
-    public Post toPost() {
-        Post post = new Post();
-
-        post.setId(this.id);
-        post.setDetails(details);
-
-        return post;
     }
 
 }

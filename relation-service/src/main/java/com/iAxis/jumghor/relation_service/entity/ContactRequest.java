@@ -1,8 +1,13 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.relation_service.entity;
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
+import com.iAxis.jumghor.entities.dto.ContactRequestDto;
+import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 /**
@@ -58,4 +63,26 @@ public class ContactRequest extends Persistent<Long> {
     public void setToId(Long toId) {
         this.toId = toId;
     }
+
+    public static ContactRequest from(ContactRequestDto contactRequestDto) {
+        ContactRequest contactRequest = new ContactRequest();
+
+        contactRequest.setId(contactRequestDto.getId());
+        contactRequest.setFromId(contactRequestDto.getFromUser().getId());
+        contactRequest.setToId(contactRequestDto.getToUser().getId());
+
+        return contactRequest;
+    }
+
+    public ContactRequestDto to(UserDto from, UserDto to) {
+        ContactRequestDto contactRequestDto = new ContactRequestDto();
+
+        contactRequestDto.setId(getId());
+        contactRequestDto.setFromUser(from);
+        contactRequestDto.setToUser(to);
+        contactRequestDto.setCreated(getCreated());
+
+        return contactRequestDto;
+    }
+
 }

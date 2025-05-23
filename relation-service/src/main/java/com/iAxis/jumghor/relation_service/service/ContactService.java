@@ -1,7 +1,7 @@
 package com.iAxis.jumghor.relation_service.service;
 
-import com.iAxis.jumghor.entities.entity.Contact;
-import com.iAxis.jumghor.entities.entity.ContactRequest;
+import com.iAxis.jumghor.relation_service.entity.Contact;
+import com.iAxis.jumghor.relation_service.entity.ContactRequest;
 import com.iAxis.jumghor.entities.interfaces.EntityStatus;
 import com.iAxis.jumghor.relation_service.repository.ContactRepository;
 import com.iAxis.jumghor.relation_service.repository.ContactRequestRepository;

@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.user.repository;
 
-import com.iAxis.jumghor.entities.entity.User;
+import com.iAxis.jumghor.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

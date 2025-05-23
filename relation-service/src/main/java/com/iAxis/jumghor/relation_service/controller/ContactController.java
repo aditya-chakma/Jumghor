@@ -2,8 +2,8 @@ package com.iAxis.jumghor.relation_service.controller;
 
 import com.iAxis.jumghor.entities.dto.ContactDto;
 import com.iAxis.jumghor.entities.dto.UserDto;
-import com.iAxis.jumghor.entities.entity.Contact;
-import com.iAxis.jumghor.entities.entity.ContactId;
+import com.iAxis.jumghor.relation_service.entity.Contact;
+import com.iAxis.jumghor.relation_service.entity.ContactId;
 import com.iAxis.jumghor.relation_service.proxy.UserProxy;
 import com.iAxis.jumghor.relation_service.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import static com.iAxis.jumghor.utils.collection.CollectionUtils.isAnyNull;
  * @since 30 Apr, 2025
  */
 @RestController
-@RequestMapping("/v1/c")
+@RequestMapping("/v1/contacts")
 public class ContactController {
 
     private final UserProxy userProxy;

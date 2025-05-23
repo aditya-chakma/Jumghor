@@ -1,4 +1,4 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.relation_service.entity;
 
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import jakarta.persistence.EmbeddedId;

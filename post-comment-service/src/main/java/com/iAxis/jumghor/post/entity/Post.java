@@ -1,14 +1,18 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.post.entity;
 
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
+import com.iAxis.jumghor.entities.dto.PostDto;
+import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.util.List;
 import java.util.Objects;
 
 import static com.iAxis.jumghor.entities.utils.EntityUtils.isValidIdentifier;
@@ -75,6 +79,26 @@ public class Post extends Persistent<Long> {
 
     public boolean isNew() {
         return isValidIdentifier(getId());
+    }
+
+    public static Post from(PostDto postDto) {
+        Post post = new Post();
+
+        post.setDetails(postDto.getDetails());
+        post.setLikes(postDto.getLikes());
+
+        return post;
+    }
+
+    public PostDto to(UserDto userDto) {
+        PostDto postDto = new PostDto();
+
+        postDto.setId(getId());
+        postDto.setDetails(getDetails());
+        postDto.setLikes(getLikes());
+        postDto.setUserDto(userDto);
+
+        return postDto;
     }
 
     @Override

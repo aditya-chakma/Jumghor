@@ -1,8 +1,7 @@
 package com.iAxis.jumghor.user.service;
 
-import com.iAxis.jumghor.entities.entity.User;
+import com.iAxis.jumghor.user.entity.User;
 import com.iAxis.jumghor.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.iAxis.jumghor.entities.entity.User.CACHE_NAME;
+import static com.iAxis.jumghor.user.entity.User.CACHE_NAME;
 
 /**
  * @author aditya.chakma
