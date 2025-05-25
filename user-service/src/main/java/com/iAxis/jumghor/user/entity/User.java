@@ -1,7 +1,8 @@
-package com.iAxis.jumghor.entities.entity;
+package com.iAxis.jumghor.user.entity;
 
 
 import com.iAxis.jumghor.entities.annotations.SnowflakeSequence;
+import com.iAxis.jumghor.entities.dto.UserDto;
 import com.iAxis.jumghor.entities.entity.interfaces.Persistent;
 import com.iAxis.jumghor.utils.security.SecurityUtils;
 import jakarta.persistence.*;
@@ -100,6 +101,28 @@ public class User extends Persistent<Long> {
 
     public boolean isNew() {
         return !isValidIdentifier(getId());
+    }
+
+    public UserDto to() {
+        UserDto userDto = new UserDto();
+
+        userDto.setId(getId());
+        userDto.setUserName(getUserName());
+        userDto.setDisplayName(getDisplayName());
+        userDto.setEmail(getEmail());
+
+        return userDto;
+    }
+
+    public static User from(UserDto userDto) {
+        User user = new User();
+
+        user.setUserName(userDto.getUserName());
+        user.setDisplayName(userDto.getDisplayName());
+        user.setEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+
+        return user;
     }
 
     @Override

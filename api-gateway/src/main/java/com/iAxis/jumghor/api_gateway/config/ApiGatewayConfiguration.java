@@ -16,9 +16,18 @@ public class ApiGatewayConfiguration {
     public RouteLocator routeLocator(RouteLocatorBuilder builder) {
         // todo: replace with routing configuration file
         return builder.routes()
-                .route(p -> p.path("/pc").uri("lb://post-comment-service"))
-                .route(p -> p.path("/u").uri("lb://user-service"))
-                .route(p -> p.path("/r").uri("lb://relation-service"))
+                .route(p -> p.path("/pc/**")
+                        .filters(f -> f.rewritePath("/pc/(?<segment>.*)","/${segment}"))
+                        .uri("lb://post-comment-service"))
+
+                .route(p -> p.path("/u/**")
+                        .filters(f -> f.rewritePath("/u/(?<segment>.*)", "/${segment}"))
+                        .uri("lb://user-service"))
+
+                .route(p -> p.path("/r/**")
+                        .filters(f -> f.rewritePath("/r/(?<segment>.*)", "/${segment}"))
+                        .uri("lb://relation-service"))
+
                 .build();
     }
 

@@ -2,8 +2,8 @@ package com.iAxis.jumghor.post.controller;
 
 import com.iAxis.jumghor.entities.dto.CommentDto;
 import com.iAxis.jumghor.entities.dto.UserDto;
-import com.iAxis.jumghor.entities.entity.Comment;
-import com.iAxis.jumghor.entities.entity.Post;
+import com.iAxis.jumghor.post.entity.Comment;
+import com.iAxis.jumghor.post.entity.Post;
 import com.iAxis.jumghor.post.proxy.UserProxy;
 import com.iAxis.jumghor.post.service.CommentService;
 import com.iAxis.jumghor.post.service.PostService;
@@ -18,7 +18,7 @@ import java.util.Objects;
  * @since 24 Apr, 2025 1:59 PM
  */
 @RestController
-@RequestMapping("/v1/comment")
+@RequestMapping("/v1/comments")
 public class CommentController {
 
     private final CommentService commentService;
@@ -36,8 +36,8 @@ public class CommentController {
         this.userProxy = userProxy;
     }
 
-    @GetMapping("/all/{post_id}")
-    public List<CommentDto> getAllComments(@PathVariable("post_id") long post_id) {
+    @GetMapping
+    public List<CommentDto> getAllComments(@RequestParam("post-id") long post_id) {
 
         Post post = postService.findById(post_id);
 
@@ -48,7 +48,7 @@ public class CommentController {
         return commentService.findAllCommentByPost(post_id).stream().map(
                 comment -> {
                     UserDto userDto = userProxy.getUser(comment.getUserId()); // add try catch here. handle
-                    return new CommentDto(comment, userDto);
+                    return comment.to(userDto);
                 }
         ).toList();
     }
@@ -63,16 +63,14 @@ public class CommentController {
             return null;
         }
 
-        Comment comment = commentDto.toComment();
+        Comment comment = Comment.from(commentDto);
         comment.setPostId(postId);
 
         commentService.save(comment);
 
         UserDto userDto = userProxy.getUser(comment.getUserId());
 
-        return new CommentDto(comment, userDto);
+        return comment.to(userDto);
     }
-
-    
 
 }

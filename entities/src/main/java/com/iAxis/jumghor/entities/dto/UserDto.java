@@ -3,7 +3,6 @@ package com.iAxis.jumghor.entities.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.iAxis.jumghor.entities.entity.User;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -34,13 +33,6 @@ public class UserDto implements Serializable {
     private String password;
 
     public UserDto() {
-    }
-
-    public UserDto(User user) {
-        this.id = user.getId();
-        this.userName = user.getUserName();
-        this.displayName = user.getDisplayName();
-        this.email = user.getEmail();
     }
 
     public long getId() {
@@ -81,17 +73,6 @@ public class UserDto implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public User toUser() {
-        User user = new User();
-
-        user.setUserName(userName);
-        user.setDisplayName(displayName);
-        user.setEmail(email);
-        user.setPassword(password);
-
-        return user;
     }
 
 }

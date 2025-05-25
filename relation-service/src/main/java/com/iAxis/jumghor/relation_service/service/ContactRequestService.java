@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.relation_service.service;
 
-import com.iAxis.jumghor.entities.entity.ContactRequest;
+import com.iAxis.jumghor.relation_service.entity.ContactRequest;
 import com.iAxis.jumghor.relation_service.repository.ContactRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

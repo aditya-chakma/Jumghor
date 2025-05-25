@@ -1,6 +1,6 @@
 package com.iAxis.jumghor.post.repository;
 
-import com.iAxis.jumghor.entities.entity.Post;
+import com.iAxis.jumghor.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
