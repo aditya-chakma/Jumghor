@@ -26,16 +26,18 @@ const RegisterUserPage = () => {
     };
 
     return (
-        <main className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="w-full max-w-6xl flex flex-row max-sm:flex-col justify-center items-center gap-8 p-8">
-                <div className="w-full max-w-lg h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
-                    <ImageCarousel />
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+            <main className="flex-1 flex items-center justify-center">
+                <div className="w-full max-w-6xl flex flex-row max-sm:flex-col justify-center items-center gap-8 p-8">
+                    <div className="w-full max-w-lg h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                        <ImageCarousel />
+                    </div>
+                    
+                    <div className="w-full max-w-md">
+                        <LoginForm onCreateAccount={() => setIsModalOpen(true)} />
+                    </div>
                 </div>
-                
-                <div className="w-full max-w-md">
-                    <LoginForm onCreateAccount={() => setIsModalOpen(true)} />
-                </div>
-            </div>
+            </main>
 
             <Modal
                 isOpen={isModalOpen}
@@ -48,7 +50,7 @@ const RegisterUserPage = () => {
                     registerUser={registerUser}
                 />
             </Modal>
-        </main>
+        </div>
     );
 };
 
