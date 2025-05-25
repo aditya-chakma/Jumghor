@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React from "react";
 import type { User } from "../interfaces/User";
 
 interface RegistrationFormProps {
@@ -8,91 +8,99 @@ interface RegistrationFormProps {
 }
 
 const RegistrationForm = ({ user, handleUser, registerUser }: RegistrationFormProps) => {
-    const handleSubmit = (e) => {
-        console.log("Click click!");
-        handleUser(user);
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
         registerUser();
     };
 
-    const handleChange = (e: React.ChangeEvent) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target;
         handleUser({ ...user, [id]: value });
     };
 
     return (
-        <>
-            <div style={{ maxWidth: "300px" }}>
-                <form onClick={(e) => e.preventDefault()}>
-                    <h2 className="text-center font-medium">Create an account</h2>
-                    <div className="grid grid-rows-1 gap-2">
-                        <div className="flex flex-col">
-                            <label htmlFor="userName">User Name</label>
-                            <input
-                                id="userName"
-                                type="text"
-                                placeholder="User Name"
-                                value={user.userName}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label htmlFor="displayName">Display Name</label>
-                            <input
-                                id="displayName"
-                                type="text"
-                                placeholder="Display name"
-                                value={user.displayName}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                id="email"
-                                type="text"
-                                placeholder="Email"
-                                value={user.email}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                id="password"
-                                type="password"
-                                placeholder="Password"
-                                value={user.password}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex flex-col">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input
-                                id="confirmPassword"
-                                type="password"
-                                placeholder="Confirm Password"
-                                value={user.confirmPassword}
-                                onChange={handleChange}
-                            />
-                        </div>
-
-                        <div className="flex justify-center">
-                            <button
-                                className="border-2 w-min p-1 rounded-md text-white bg-linear-to-r from-violet-500 to-blue-500"
-                                type="submit"
-                                onClick={handleSubmit}
-                            >
-                                Register
-                            </button>
-                        </div>
+        <div className="w-full">
+            <form onSubmit={handleSubmit}>
+                <div className="space-y-4">
+                    <div>
+                        <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
+                            Username
+                        </label>
+                        <input
+                            id="userName"
+                            type="text"
+                            value={user.userName}
+                            onChange={handleChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
                     </div>
-                </form>
-            </div>
-        </>
+
+                    <div>
+                        <label htmlFor="displayName" className="block text-sm font-medium text-gray-700">
+                            Display Name
+                        </label>
+                        <input
+                            id="displayName"
+                            type="text"
+                            value={user.displayName}
+                            onChange={handleChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                            Email
+                        </label>
+                        <input
+                            id="email"
+                            type="email"
+                            value={user.email}
+                            onChange={handleChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                            Password
+                        </label>
+                        <input
+                            id="password"
+                            type="password"
+                            value={user.password}
+                            onChange={handleChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                            Confirm Password
+                        </label>
+                        <input
+                            id="confirmPassword"
+                            type="password"
+                            value={user.confirmPassword}
+                            onChange={handleChange}
+                            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                            required
+                        />
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-pointer"
+                    >
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 };
 
