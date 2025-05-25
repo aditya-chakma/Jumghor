@@ -1,9 +1,13 @@
 import { useState } from "react";
 import submit from "../utils/RequestUtils";
 import RegistrationForm from "../forms/RegistrationForm";
+import LoginForm from "../forms/LoginForm";
+import Modal from "../components/Modal";
+import ImageCarousel from "../components/ImageCarousel";
 import type { User } from "../interfaces/User";
 
 const RegisterUserPage = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [user, setUser] = useState<User>({
         userName: "",
         displayName: "",
@@ -13,11 +17,8 @@ const RegisterUserPage = () => {
     });
 
     const registerUser = async () => {
-        submit("http://localhost:8100/v1/u/profile", user);
-    };
-
-    const handleSubmit = () => {
-        registerUser();
+        await submit("http://localhost:8100/v1/u/profile", user);
+        setIsModalOpen(false);
     };
 
     const handleUser = (u: User) => {
@@ -25,23 +26,29 @@ const RegisterUserPage = () => {
     };
 
     return (
-        <>
-            <main>
-                <div className="flex flex-row max-sm:flex-col justify-around m-16 mt-0 mb-0">
-                    <div
-                        className="flex flex-col justify-center gap-3 p-3 m-3"
-                        style={{ minWidth: "300px", minHeight: "300px", background: "skyblue" }}
-                    >
-                        <p className="text-center text-3xl">Your data, your right. Privacy Matters.</p>
-                        <p className="text-center text-3xl">Not another Facebook or X</p>
-                        <p className="text-center text-3xl">Join Now </p>
-                    </div>
-                    <div>
-                        <RegistrationForm handleUser={handleUser} user={user} registerUser={handleSubmit} />
-                    </div>
+        <main className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="w-full max-w-6xl flex flex-row max-sm:flex-col justify-center items-center gap-8 p-8">
+                <div className="w-full max-w-lg h-[600px] bg-gray-100 rounded-lg overflow-hidden shadow-xl">
+                    <ImageCarousel />
                 </div>
-            </main>
-        </>
+                
+                <div className="w-full max-w-md">
+                    <LoginForm onCreateAccount={() => setIsModalOpen(true)} />
+                </div>
+            </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Create New Account"
+            >
+                <RegistrationForm
+                    handleUser={handleUser}
+                    user={user}
+                    registerUser={registerUser}
+                />
+            </Modal>
+        </main>
     );
 };
 
