@@ -1,3 +1,4 @@
+import PostDetails from "../../components/sections/post/PostDetails";
 import UserDetails from "../../components/sections/user/UserDetails";
 import type { Post } from "../../interfaces/Post";
 import { fetchRequest } from "../../utils/RequestUtils";
@@ -16,7 +17,7 @@ const ProfilePage = () => {
 
             setPosts(data);
         };
-        
+
         fetchPosts();
     }, []);
 
@@ -28,7 +29,7 @@ const ProfilePage = () => {
             <hr />
             {posts.map((post) => (
                 <div key={post.id}>
-                    <p>{post.details}</p>
+                    <PostDetails post={post} />
                 </div>
             ))}
         </>

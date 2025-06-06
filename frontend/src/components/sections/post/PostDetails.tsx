@@ -1,20 +1,30 @@
 import styles from "./PostDetails.module.css";
+import type { Post } from "../../../interfaces/Post";
 
-const PostDetails = () => {
+interface PostDetailsProps {
+    post: Post;
+}
+
+const PostDetails = ({ post }: PostDetailsProps) => {
+    const user = post.user;
+
     return (
-        <>
-            <div className="max-w-4/6 gap-3" style={{ background: "aliceblue" }}>
-                <div>
-                    <div>Aditya Larma</div>
-                    <div>
-                        <div>
-                            <p className={styles.customwrap}>"This is a test. This is a test. And this is a Test."</p>
-                        </div>
-                    </div>
-                </div>
-                <div>Like comment share options here</div>
+        <div className={styles.postContainer}>
+            <div className={styles.userName}>
+                {user.displayName}
             </div>
-        </>
+            <div className={styles.postContent}>
+                <p className={styles.postDetails}>{post.details}</p>
+            </div>
+            <div className={styles.postFooter}>
+                <div className={styles.likes}>
+                    {post.likes} likes
+                </div>
+                <a href="#" className={styles.commentsLink}>
+                    View comments
+                </a>
+            </div>
+        </div>
     );
 };
 
