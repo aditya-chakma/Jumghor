@@ -1,5 +1,4 @@
 import NewPost from "../../components/sections/post/NewPost";
-import PostDetails from "../../components/sections/post/PostDetails";
 
 const UserFeedPage = () => {
     return (
@@ -7,9 +6,7 @@ const UserFeedPage = () => {
             <div className="flex justify-center">
                 <NewPost />
             </div>
-            <div>
-                <PostDetails />
-            </div>
+
         </div>
     );
 };
